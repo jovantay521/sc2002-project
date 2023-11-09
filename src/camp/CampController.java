@@ -9,15 +9,18 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class CampController {
-    private final ArrayList<Camp> camps = new ArrayList<>();
+    private final List<Camp> camps = new ArrayList<>();
+    // Returns list of camps that can be viewed by user
     public List<Camp> getVisibleCamps(User user) {
         return camps.stream().filter(camp -> camp.isVisible(user)).collect(Collectors.toList());
     }
+    // Returns list of camps that belongs to staff
     public List<Camp> getInChargeCamps(Staff staff) {
         return camps.stream().filter(camp -> camp.isInCharge(staff)).collect(Collectors.toList());
     }
+    // creates a camp
     public void createCamp(Staff staff, String name) {
-        camps.add(new Camp(name, staff));
+        camps.add(new Camp(name, staff, true));
     }
 
     public static<T> void displayCamps(List<T> camps) {

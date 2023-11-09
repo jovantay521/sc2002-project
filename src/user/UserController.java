@@ -38,6 +38,8 @@ public class UserController {
             System.out.println("Error: " + e);
         }
     }
+    
+    //
     public User findUser(String userId, String password) throws NoSuchElementException {
         return users.stream().filter(user -> user.verify(userId, password)).findFirst().orElseThrow();
     }

@@ -1,7 +1,5 @@
 package user;
 
-import java.util.Objects;
-
 public class User {
     private String name;
     private String userID;
@@ -19,7 +17,9 @@ public class User {
     public String getUserID() {
         return userID;
     }
-
+    public String getName() {
+        return name;
+    }
     public String getFaculty() {
         return faculty;
     }
