@@ -33,6 +33,13 @@ public class StudentScreen extends Screen {
         int choice = scanner.nextInt();
         scanner.nextLine();
         return switch (choice) {
+            case 0 -> {
+                if ((selectedCamp = selectCamp(camps)) != null && student.canJoinCamp(selectedCamp)) {
+                    // selectedCamp.enroll(student);
+                    System.out.println("Registered student to " + selectedCamp + ".");
+                }
+                yield this;
+            }
             case 3 -> {
                 if ((selectedCamp = selectCamp(camps)) != null) {
                     yield new StudentEnquiryScreen(userController, campController, student, selectedCamp);

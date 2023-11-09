@@ -1,4 +1,3 @@
-import camp.Camp;
 import camp.CampController;
 import screen.Screen;
 import screen.UserLoginScreen;
@@ -13,7 +12,6 @@ enum FilterOrder
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("CWD:" + System.getProperty("user.dir"));
         UserController userController = new UserController();
         CampController campController = new CampController();
 
