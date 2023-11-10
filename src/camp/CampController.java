@@ -2,25 +2,29 @@ package camp;
 
 import user.Staff;
 import user.User;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class CampController {
+
+public class CampController
+{
     private final List<Camp> camps = new ArrayList<>();
+    
     // Returns list of camps that can be viewed by user
-    public List<Camp> getVisibleCamps(User user) {
+    public List<Camp> getVisibleCamps(User user)
+    {
         return camps.stream().filter(camp -> camp.isVisible(user)).collect(Collectors.toList());
     }
+    
     // Returns list of camps that belongs to staff
-    public List<Camp> getInChargeCamps(Staff staff) {
+    public List<Camp> getInChargeCamps(Staff staff)
+    {
         return camps.stream().filter(camp -> camp.isInCharge(staff)).collect(Collectors.toList());
     }
     // creates a camp
-    public void createCamp(Staff staff, String name) {
-        camps.add(new Camp(name, staff, true));
+    public void createCamp(Staff staff, String campName, String startDate, String endDate, String regCloseDate, String userGroup, String location, int totalSlots, int campCommitteeSlot, String description)
+    {
+        camps.add(new Camp(campName, startDate, endDate, regCloseDate, userGroup, location, totalSlots, campCommitteeSlot, description, staff, true));
     }
 
     public static<T> void displayCamps(List<T> camps) {
