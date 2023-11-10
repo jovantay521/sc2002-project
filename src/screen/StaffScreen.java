@@ -3,6 +3,7 @@ package screen;
 import camp.CampController;
 import user.Staff;
 import user.UserController;
+import utils.TimeRegion;
 
 import static camp.CampController.displayCamps;
 
@@ -39,9 +40,10 @@ public class StaffScreen extends Screen {
             	boolean validSDate = false;
             	boolean validEDate = false;
             	boolean validRCDate = false;
-            	String startDate = " ";
-            	String endDate = " ";
-            	String regCloseDate = " ";
+
+                LocalDate SelectedEDate = null;
+                LocalDate SelectedRDate = null;
+                LocalDate SelectedSDate = null;
             	
             	
                 System.out.println("Choose a camp name: ");
@@ -52,9 +54,8 @@ public class StaffScreen extends Screen {
 	                {
 		                System.out.println("Enter the start date of Camp (yyyy-MM-dd): ");
 		                String sDate = scanner.nextLine();
-		                LocalDate SelectedSDate = LocalDate.parse(sDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		                SelectedSDate = LocalDate.parse(sDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		                DateTimeFormatter sformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		                startDate = SelectedSDate.format(sformatter);
 		                validSDate = true;
 	                }
 	                catch(DateTimeException e)
@@ -69,9 +70,8 @@ public class StaffScreen extends Screen {
                 	{
 	                	System.out.println("Enter the end date of Camp (yyyy-MM-dd): ");
 	                    String eDate = scanner.nextLine();
-	                    LocalDate SelectedEDate = LocalDate.parse(eDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	                    SelectedEDate = LocalDate.parse(eDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	                    DateTimeFormatter eformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	                    endDate = SelectedEDate.format(eformatter);
 	                    validEDate = true;
                 	}
                 	catch(DateTimeException e)
@@ -87,9 +87,8 @@ public class StaffScreen extends Screen {
                 	{
 	                	System.out.println("Enter the registration closing date of the Camp (yyyy-MM-dd): ");
 	                    String rcDate = scanner.nextLine();
-	                    LocalDate SelectedRDate = LocalDate.parse(rcDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	                    SelectedRDate = LocalDate.parse(rcDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	                    DateTimeFormatter rcformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-	                    regCloseDate = SelectedRDate.format(rcformatter); 
 	                    validRCDate = true;
                 	}
                 	catch(DateTimeException e)
@@ -113,7 +112,7 @@ public class StaffScreen extends Screen {
                 System.out.println("Choose the camp committee slots (max 10): ");
                 var campCommitteeSlots = scanner.nextInt();
                  
-                campController.createCamp(staff, name, startDate, endDate, regCloseDate, userGroup, location, totalSlots, campCommitteeSlots, description);
+                campController.createCamp(staff, name, new TimeRegion(SelectedSDate, SelectedEDate), SelectedRDate, userGroup, location, totalSlots, campCommitteeSlots, description);
                 yield this;
             }
             case 7 -> new StaffInChargeScreen(userController, campController, staff);

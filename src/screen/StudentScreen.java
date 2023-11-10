@@ -3,6 +3,7 @@ package screen;
 import camp.Camp;
 import camp.CampController;
 import user.Student;
+import user.StudentCommittee;
 import user.UserController;
 
 import static camp.CampController.displayCamps;
@@ -36,7 +37,15 @@ public class StudentScreen extends Screen {
             case 0 -> {
                 if ((selectedCamp = selectCamp(camps)) != null && student.canJoinCamp(selectedCamp)) {
                     // selectedCamp.enroll(student);
-                    System.out.println("Registered student to " + selectedCamp + ".");
+                    System.out.println("Registered student to " + selectedCamp + " as attendee.");
+                }
+                yield this;
+            }
+            case 1 -> {
+                if ((selectedCamp = selectCamp(camps)) != null && student.canJoinCamp(selectedCamp)) {
+                    // selectedCamp.enroll(student);
+                    System.out.println("Registered student to " + selectedCamp + " as committee.");
+                    yield new StudentCommitteeScreen(userController, campController, new StudentCommittee(student, selectedCamp));
                 }
                 yield this;
             }

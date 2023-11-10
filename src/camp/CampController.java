@@ -2,6 +2,9 @@ package camp;
 
 import user.Staff;
 import user.User;
+import utils.TimeRegion;
+
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -22,9 +25,9 @@ public class CampController
         return camps.stream().filter(camp -> camp.isInCharge(staff)).collect(Collectors.toList());
     }
     // creates a camp
-    public void createCamp(Staff staff, String campName, String startDate, String endDate, String regCloseDate, String userGroup, String location, int totalSlots, int campCommitteeSlot, String description)
+    public void createCamp(Staff staff, String campName, TimeRegion region, LocalDate regCloseDate, String userGroup, String location, int totalSlots, int campCommitteeSlot, String description)
     {
-        camps.add(new Camp(campName, startDate, endDate, regCloseDate, userGroup, location, totalSlots, campCommitteeSlot, description, staff, true));
+        camps.add(new Camp(campName, region, regCloseDate, userGroup, location, totalSlots, campCommitteeSlot, description, staff, true));
     }
 
     public static<T> void displayCamps(List<T> camps) {
