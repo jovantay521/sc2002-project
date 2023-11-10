@@ -35,17 +35,24 @@ public class StudentScreen extends Screen {
         scanner.nextLine();
         return switch (choice) {
             case 0 -> {
-                if ((selectedCamp = selectCamp(camps)) != null && student.canJoinCamp(selectedCamp)) {
-                    // selectedCamp.enroll(student);
+                if ((selectedCamp = selectCamp(camps)) != null && student.checkTimeConflicts(selectedCamp)) {
                     System.out.println("Registered student to " + selectedCamp + " as attendee.");
+                    try {
+                        selectedCamp.addStudent(student);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Error: " + e);
+                    }
                 }
                 yield this;
             }
             case 1 -> {
-                if ((selectedCamp = selectCamp(camps)) != null && student.canJoinCamp(selectedCamp)) {
-                    // selectedCamp.enroll(student);
+                if ((selectedCamp = selectCamp(camps)) != null && student.checkTimeConflicts(selectedCamp)) {
                     System.out.println("Registered student to " + selectedCamp + " as committee.");
-                    yield new StudentCommitteeScreen(userController, campController, new StudentCommittee(student, selectedCamp));
+                    try {
+                        yield new StudentCommitteeScreen(userController, campController, new StudentCommittee(student, selectedCamp));
+                    } catch (Exception e) {
+
+                    }
                 }
                 yield this;
             }

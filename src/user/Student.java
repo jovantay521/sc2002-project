@@ -12,11 +12,11 @@ public class Student extends User {
         attendingCamps = new ArrayList<>();
     }
     // check for conflicts of time, camp remaining slots.
-    public boolean canJoinCamp(Camp joinCamp) {
-        if(joinCamp.canJoinNow() && !attendingCamps.stream().anyMatch(camp -> camp.getRegion().conflictsWith(joinCamp.getRegion()))) {
-            return true;
-        }
-        return false;
+    public boolean checkTimeConflicts(Camp joinCamp) {
+        return attendingCamps.stream().noneMatch(camp -> camp.getRegion().conflictsWith(joinCamp.getRegion()));
+    }
+    public void joinCamp(Camp camp) {
+        attendingCamps.add(camp);
     }
 
 }

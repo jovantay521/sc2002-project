@@ -31,6 +31,17 @@ public class Camp
 
         members = new ArrayList<>();
     }
+
+    public void addStudent(Student student) throws IllegalArgumentException {
+        if (!checkIsAfterCloseDate()) {
+            throw new IllegalArgumentException("Registration date for this camp has passed.");
+        }
+        if (!student.checkTimeConflicts(this)) {
+            throw new IllegalArgumentException("Student cannot join this camp due to conflicts in time.");
+        }
+        members.add(student);
+        student.joinCamp(this);
+    }
     
     // Checks if the user is a staff or the camp is set to visible.
     boolean isVisible(User user)
@@ -51,8 +62,8 @@ public class Camp
     }
 
     // Checks if this method is access after closing registration date.
-    public boolean canJoinNow() {
-        return LocalDateTime.now().toLocalDate().isAfter(campInfo.getRegCloseDate());
+    public boolean checkIsAfterCloseDate() {
+        return LocalDateTime.now().toLocalDate().isBefore(campInfo.getRegCloseDate());
     }
 
     public CampInformation campInformation() {
