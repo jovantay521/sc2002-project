@@ -1,15 +1,15 @@
 package user;
 
-public class User {
-    private String name;
-    private String userID;
-    private String email;
+import java.io.Serializable;
+
+public class User implements Serializable {
+    private final String name;
+    private final String userID;
     private String password;
-    private String faculty;
-    public User(String name, String userID, String email, String password, String faculty) {
+    private final String faculty;
+    public User(String name, String userID, String password, String faculty) {
         this.name = name;
         this.userID = userID;
-        this.email = email;
         this.password = password;
         this.faculty = faculty;
     }
@@ -19,9 +19,6 @@ public class User {
     }
     public String getName() {
         return name;
-    }
-    public String getEmail() {
-        return email;
     }
     public String getPassword() {
         return password;

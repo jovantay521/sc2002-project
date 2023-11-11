@@ -6,7 +6,6 @@ import utils.TimeRegion;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.List;
 
 interface TestScenario {
     public boolean test();
@@ -31,7 +30,7 @@ public class TestMain {
         userController.addStaff("data/staff_list.csv");
 
         campController.createCamp(
-                (Staff) userController.findUser("HUKUMAR", "password"),
+                (Staff) userController.verifyLogin("HUKUMAR", "password"),
                 "Picnic party",
                 new TimeRegion(LocalDate.of(2023, 11, 10), LocalDate.of(2023, 12, 10)),
                 LocalDate.of(2050, 12, 12),
@@ -42,7 +41,7 @@ public class TestMain {
                 "Always welcoming."
         );
         campController.createCamp(
-                (Staff) userController.findUser("HUKUMAR", "password"),
+                (Staff) userController.verifyLogin("HUKUMAR", "password"),
                 "Study group",
                 new TimeRegion(LocalDate.of(2023, 12, 5), LocalDate.of(2023, 12, 20)),
                 LocalDate.of(2050, 12, 12),
@@ -53,7 +52,7 @@ public class TestMain {
                 "Study together!"
         );
 
-        Student student = (Student) userController.findUser("YCHERN", "password");
+        Student student = (Student) userController.verifyLogin("YCHERN", "password");
         var camps = campController.getVisibleCamps(student);
         camps.get(0).addStudent(student);
 
@@ -68,6 +67,15 @@ public class TestMain {
 
         TestGroup("Exceeding capacity should be spotted.", () -> {
             return true;
+        });
+
+        TestGroup("Repeated joining should be spotted.", () -> {
+            try {
+                camps.get(0).addStudent(student);
+                return false;
+            } catch (IllegalArgumentException e) {
+                return true;
+            }
         });
     }
 }

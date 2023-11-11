@@ -1,8 +1,9 @@
 package utils;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class TimeRegion {
+public class TimeRegion implements Serializable {
     private LocalDate start;
     private LocalDate end;
     public TimeRegion(LocalDate start, LocalDate end) {

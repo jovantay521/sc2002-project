@@ -4,14 +4,42 @@ import user.Staff;
 import user.User;
 import utils.TimeRegion;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
-public class CampController
+public class CampController implements Serializable
 {
     private final List<Camp> camps = new ArrayList<>();
+
+    public static Optional<CampController> loadFrom(String filePath) {
+        try (var s = new FileInputStream(filePath)) {
+            var o = new ObjectInputStream(s);
+            return Optional.of((CampController) o.readObject());
+        } catch (FileNotFoundException e) {
+            // System.out.println("File does not exist.");
+        } catch (IOException e) {
+            System.out.println("IO Error " + e);
+        } catch (ClassNotFoundException e) {
+            System.out.println("Class Error " + e + "\nFix by implementing Serializable.");
+        }
+        return Optional.empty();
+    }
+
+    public static void saveTo(String filePath, CampController campController) {
+        try (FileOutputStream s = new FileOutputStream(filePath)) {
+            ObjectOutputStream o = new ObjectOutputStream(s);;
+            o.writeObject(campController);
+            o.flush();
+            o.close();
+        } catch (FileNotFoundException e) {
+            // System.out.println("File does not exist.");
+        } catch (IOException e) {
+            System.out.println("IO Error " + e);
+        }
+    }
     
     // Returns list of camps that can be viewed by user
     public List<Camp> getVisibleCamps(User user)

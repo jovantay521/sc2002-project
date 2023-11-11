@@ -1,5 +1,6 @@
 package camp;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,12 +12,12 @@ import user.StudentCommittee;
 import user.User;
 import utils.TimeRegion;
 
-public class Camp
+public class Camp implements Serializable
 {
     //private String name;
     private Staff staff;
-    // Student and StudentCommittee 
-    private List<Student> members;
+    // Student and StudentCommittee IDs
+    private List<String> members;
     private CampInformation campInfo;
 
     // and other things here
@@ -33,14 +34,25 @@ public class Camp
     }
 
     public void addStudent(Student student) throws IllegalArgumentException {
+        if (members.stream().anyMatch(s -> s.equals(student.getUserID()))) {
+            throw new IllegalArgumentException("The student is already in the camp.");
+        }
         if (!checkIsAfterCloseDate()) {
             throw new IllegalArgumentException("Registration date for this camp has passed.");
         }
+        // TODO: Check for full slots.
         if (!student.checkTimeConflicts(this)) {
             throw new IllegalArgumentException("Student cannot join this camp due to conflicts in time.");
         }
-        members.add(student);
+        members.add(student.getUserID());
         student.joinCamp(this);
+    }
+
+    public void addStudentCommittee(Student student) throws IllegalArgumentException {
+        if (student instanceof StudentCommittee) {
+            throw new IllegalArgumentException("Student is already a student committee");
+        }
+        this.addStudent(student);
     }
     
     // Checks if the user is a staff or the camp is set to visible.
@@ -66,20 +78,7 @@ public class Camp
         return LocalDateTime.now().toLocalDate().isBefore(campInfo.getRegCloseDate());
     }
 
-    public CampInformation campInformation() {
-        return campInfo;
-    }
-
     public TimeRegion getRegion() {
         return campInfo.getTimeRegion();
-    }
-    
-    public List<Student> getMembers(User user)
-    {
-        if (user instanceof StudentCommittee || user instanceof Staff)
-        {
-            return members;
-        }
-        return null;
     }
 }

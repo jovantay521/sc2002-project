@@ -21,6 +21,7 @@ public class StaffInChargeScreen extends StaffScreen {
         System.out.println("Camps in charged: ");
         displayCamps(camps);
 
+        System.out.println("Options: ");
         System.out.println("0: View enquiries: ");
         System.out.println("1: View suggestions: ");
         System.out.println("2: Generate attendance report: ");

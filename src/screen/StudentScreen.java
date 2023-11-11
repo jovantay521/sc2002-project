@@ -17,6 +17,8 @@ public class StudentScreen extends Screen {
     }
     @Override
     public Screen display() {
+        System.out.println("--------------------------");
+        System.out.println("Logging in as " + student.getName());
         Camp selectedCamp;
 
         System.out.println("Camps: ");
@@ -29,6 +31,7 @@ public class StudentScreen extends Screen {
         System.out.println("2: Submit enquiries to a camp.");
         System.out.println("3: View sent enquiries.");
         System.out.println("4: Withdraw from camp.");
+        System.out.println("7: Logout.");
         System.out.println("8: Change Password.");
         System.out.println("9: Quit.");
         int choice = scanner.nextInt();
@@ -49,9 +52,11 @@ public class StudentScreen extends Screen {
                 if ((selectedCamp = selectCamp(camps)) != null && student.checkTimeConflicts(selectedCamp)) {
                     System.out.println("Registered student to " + selectedCamp + " as committee.");
                     try {
-                        yield new StudentCommitteeScreen(userController, campController, new StudentCommittee(student, selectedCamp));
-                    } catch (Exception e) {
-
+                        selectedCamp.addStudentCommittee(student);
+                        var committeeMember = userController.convertTo(student, selectedCamp);
+                        yield new StudentCommitteeScreen(userController, campController, committeeMember);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Error: " + e);
                     }
                 }
                 yield this;
@@ -62,6 +67,7 @@ public class StudentScreen extends Screen {
                 }
                 yield this;
             }
+            case 7 -> new UserLoginScreen(userController, campController);
             case 8 -> {
                 System.out.println("Choose new password: ");
                 var password = scanner.nextLine();

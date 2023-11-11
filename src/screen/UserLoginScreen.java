@@ -18,7 +18,7 @@ public class UserLoginScreen extends Screen {
         String password = scanner.nextLine();
 
         try {
-            User user = userController.findUser(userId, password);
+            User user = userController.verifyLogin(userId, password);
             if (user instanceof StudentCommittee studentCommittee) {
                 return new StudentCommitteeScreen(userController, campController, studentCommittee);
             } else if (user instanceof Student student) {

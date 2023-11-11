@@ -20,7 +20,9 @@ public class StaffScreen extends Screen {
 
     @Override
     public Screen display() {
-    	
+        System.out.println("--------------------------");
+        System.out.println("Logging in as " + staff.getName());
+
         System.out.println("Camps: ");
         var camps = campController.getVisibleCamps(staff);
         displayCamps(camps);
@@ -29,7 +31,8 @@ public class StaffScreen extends Screen {
         System.out.println("0: Create camp.");
         System.out.println("1: Edit camp.");
         System.out.println("2: Delete camp.");
-        System.out.println("7: Enter submenu.");
+        System.out.println("6: Enter submenu.");
+        System.out.println("7: Logout.");
         System.out.println("8: Change Password.");
         System.out.println("9: Quit.");
 
@@ -44,8 +47,7 @@ public class StaffScreen extends Screen {
                 LocalDate SelectedEDate = null;
                 LocalDate SelectedRDate = null;
                 LocalDate SelectedSDate = null;
-            	
-            	
+
                 System.out.println("Choose a camp name: ");
                 var name = scanner.nextLine();
                 do
@@ -55,7 +57,6 @@ public class StaffScreen extends Screen {
 		                System.out.println("Enter the start date of Camp (yyyy-MM-dd): ");
 		                String sDate = scanner.nextLine();
 		                SelectedSDate = LocalDate.parse(sDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		                DateTimeFormatter sformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		                validSDate = true;
 	                }
 	                catch(DateTimeException e)
@@ -71,7 +72,6 @@ public class StaffScreen extends Screen {
 	                	System.out.println("Enter the end date of Camp (yyyy-MM-dd): ");
 	                    String eDate = scanner.nextLine();
 	                    SelectedEDate = LocalDate.parse(eDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	                    DateTimeFormatter eformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	                    validEDate = true;
                 	}
                 	catch(DateTimeException e)
@@ -88,7 +88,6 @@ public class StaffScreen extends Screen {
 	                	System.out.println("Enter the registration closing date of the Camp (yyyy-MM-dd): ");
 	                    String rcDate = scanner.nextLine();
 	                    SelectedRDate = LocalDate.parse(rcDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-	                    DateTimeFormatter rcformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	                    validRCDate = true;
                 	}
                 	catch(DateTimeException e)
@@ -115,7 +114,8 @@ public class StaffScreen extends Screen {
                 campController.createCamp(staff, name, new TimeRegion(SelectedSDate, SelectedEDate), SelectedRDate, userGroup, location, totalSlots, campCommitteeSlots, description);
                 yield this;
             }
-            case 7 -> new StaffInChargeScreen(userController, campController, staff);
+            case 6 -> new StaffInChargeScreen(userController, campController, staff);
+            case 7 -> new UserLoginScreen(userController, campController);
             case 8 -> {
                 System.out.println("Choose new password: ");
                 var password = scanner.nextLine();

@@ -1,5 +1,6 @@
 package camp;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Timer;
 
@@ -7,7 +8,7 @@ import user.Staff;
 import utils.TimeRegion;
 
 
-public class CampInformation
+public class CampInformation implements Serializable
 {
 	private static final int MAX_COMMITTEE_SLOTS = 10;
     private String campName;
