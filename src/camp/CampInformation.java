@@ -1,15 +1,20 @@
 package camp;
 
+import java.io.Serializable;
+import java.lang.reflect.Modifier;
+import java.time.LocalDate;
+import java.util.*;
+
 import user.Staff;
+import utils.TimeRegion;
 
 
-public class CampInformation
+public final class CampInformation implements Serializable
 {
 	private static final int MAX_COMMITTEE_SLOTS = 10;
     private String campName;
-    private String startDate;
-    private String endDate;
-    private String regCloseDate;
+    private TimeRegion region;
+    private LocalDate regCloseDate;
     private String userGroup;
     private String location;
     private int totalSlots;
@@ -17,13 +22,12 @@ public class CampInformation
     private String description;
     private String inCharge;
 
-    public CampInformation(String campName, String startDate, String endDate,String regCloseDate, String userGroup,
+    public CampInformation(String campName, TimeRegion region,LocalDate regCloseDate, String userGroup,
             String location, int totalSlots, int campCommitteeSlot, String description, Staff inCharge)
     {
 
         this.campName = campName;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.region = region;
         this.regCloseDate = regCloseDate;
         this.userGroup = userGroup;
         this.location = location;
@@ -42,33 +46,27 @@ public class CampInformation
     {
     	return campName;
     }
-    
-    public void setStartDate(String startDate)
-    {
-    	this.startDate = startDate;
+
+    public TimeRegion getTimeRegion() {
+        return region;
     }
     
-    public String getStartDate()
-    {
-    	return startDate;
-    }
+    // public void setStartDate(String startDate)
+    // {
+    // 	this.startDate = startDate;
+    // }
     
-    public void setEndDate(String endDate)
-    {
-    	this.endDate = endDate;
-    }
+    // public void setEndDate(String endDate)
+    // {
+    // 	this.endDate = endDate;
+    // }
     
-    public String getEndDate()
-    {
-    	return endDate;
-    } 
+    // public void setRegCloseDate(String regCloseDate)
+    // {
+    // 	this.regCloseDate = regCloseDate;
+    // }
     
-    public void setRegCloseDate(String regCloseDate)
-    {
-    	this.regCloseDate = regCloseDate;
-    }
-    
-    public String getRegCloseDate()
+    public LocalDate getRegCloseDate()
     {
     	return regCloseDate;
     }
@@ -134,5 +132,18 @@ public class CampInformation
     public String getInCharge()
     {
     	return inCharge;
+    }
+
+    public Map<String, String> getPairs() {
+        Map<String, String> pairs = new HashMap<>();
+        for (var member: this.getClass().getDeclaredFields()) {
+            if (Modifier.isStatic(member.getModifiers()))
+                continue;
+            try {
+                pairs.put(member.getName(), member.get(this).toString());
+            } catch (IllegalAccessException ignored) {
+            }
+        }
+        return pairs;
     }
 }
