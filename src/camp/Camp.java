@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 import user.Staff;
 import user.Student;
@@ -14,13 +16,13 @@ import utils.TimeRegion;
 
 public class Camp implements Serializable
 {
-    //private String name;
-    private Staff staff;
+    private final Staff staff;
     // Student and StudentCommittee IDs
-    private List<String> members;
-    private CampInformation campInfo;
-
-    // and other things here
+    private final List<String> attendees;
+    private final List<String> committees;
+    private final List<Suggestion> suggestions;
+    private final List<Enquiry> enquiries;
+    private final CampInformation campInfo;
     private boolean visible;
     
     public Camp(String campName, TimeRegion region, LocalDate regCloseDate, String userGroup,
@@ -30,31 +32,82 @@ public class Camp implements Serializable
         this.staff = staff;
         this.visible = visible;
 
-        members = new ArrayList<>();
+        enquiries = new ArrayList<>();
+        suggestions = new ArrayList<>();
+        attendees = new ArrayList<>();
+        committees = new ArrayList<>();
     }
 
-    public void addStudent(Student student) throws IllegalArgumentException {
-        if (members.stream().anyMatch(s -> s.equals(student.getUserID()))) {
-            throw new IllegalArgumentException("The student is already in the camp.");
+    public Map<String, String> getDetailsAsValue() {
+        return campInfo.getPairs();
+    }
+
+    protected void doStudentChecks(Student student) throws CampControllerException {
+        if (Stream.concat(attendees.stream(), committees.stream()).anyMatch(s -> s.equals(student.getUserID()))) {
+            throw new CampControllerException("The student is already in the camp.");
         }
         if (!checkIsAfterCloseDate()) {
-            throw new IllegalArgumentException("Registration date for this camp has passed.");
+            throw new CampControllerException("Registration date for this camp has passed.");
         }
-        // TODO: Check for full slots.
         if (!student.checkTimeConflicts(this)) {
-            throw new IllegalArgumentException("Student cannot join this camp due to conflicts in time.");
+            throw new CampControllerException("Student cannot join this camp due to conflicts in time.");
         }
-        members.add(student.getUserID());
+    }
+    public void addStudent(Student student) throws CampControllerException {
+        // TODO: Check for full slots.
+        // if camp.isFullAttendee()
+        doStudentChecks(student);
+        attendees.add(student.getUserID());
         student.joinCamp(this);
     }
 
-    public void addStudentCommittee(Student student) throws IllegalArgumentException {
+    public void addStudentCommittee(Student student) throws CampControllerException {
+        // TODO: Check for full slots.
+        // if camp.isFullCommittee()
         if (student instanceof StudentCommittee) {
-            throw new IllegalArgumentException("Student is already a student committee");
+            throw new CampControllerException("Student is already a student committee!");
         }
-        this.addStudent(student);
+        doStudentChecks(student);
+        committees.add(student.getUserID());
+        student.joinCamp(this);
     }
-    
+    public void removeStudent(Student student) throws CampControllerException {
+        if (committees.stream().anyMatch(s -> s.equals(student.getUserID()))) {
+            throw new CampControllerException("A student committee cannot leave the camp!");
+        }
+        attendees.removeIf(s -> s.equals(student.getUserID()));
+        student.removeCamp(this);
+    }
+    public void addSuggestion(Student student, Suggestion suggestion) {
+        if (committees.stream().noneMatch(s -> s.equals(student.getUserID()))) {
+            throw new RuntimeException("Only committee members can add suggestions");
+        }
+        suggestions.add(suggestion);
+    }
+    public List<Suggestion> getSentSuggestions(Student student) {
+        return suggestions.stream().filter(suggestion -> suggestion.getUserID().equals(student.getUserID())).toList();
+    }
+    public List<Suggestion> getAllSuggestions() {
+        return suggestions;
+    }
+    public void deleteSuggestion(Suggestion suggestion) {
+        suggestions.removeIf(s -> s == suggestion);
+    }
+    public void addEnquiries(Student student, Enquiry enquiry) {
+        enquiries.add(enquiry);
+    }
+    public List<Enquiry> getSentEnquiries(Student student) {
+        return enquiries.stream().filter(enquiry -> enquiry.getUserID().equals(student.getUserID())).toList();
+    }
+    public List<Enquiry> getAllEnquiries() {
+        return enquiries;
+    }
+    public void deleteEnquiries(Enquiry enquiry) {
+        enquiries.removeIf(e -> e == enquiry);
+    }
+    public List<String> getStudentNames() {
+        return Stream.concat(attendees.stream(), committees.stream()).toList();
+    }
     // Checks if the user is a staff or the camp is set to visible.
     boolean isVisible(User user)
     {

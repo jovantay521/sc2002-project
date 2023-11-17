@@ -1,7 +1,9 @@
 package camp;
 
 import user.Staff;
+import user.Student;
 import user.User;
+import user.UserController;
 import utils.TimeRegion;
 
 import java.io.*;
@@ -19,7 +21,7 @@ public class CampController implements Serializable
             var o = new ObjectInputStream(s);
             return Optional.of((CampController) o.readObject());
         } catch (FileNotFoundException e) {
-            // System.out.println("File does not exist.");
+            System.out.println("File does not exist.");
         } catch (IOException e) {
             System.out.println("IO Error " + e);
         } catch (ClassNotFoundException e) {
@@ -35,7 +37,7 @@ public class CampController implements Serializable
             o.flush();
             o.close();
         } catch (FileNotFoundException e) {
-            // System.out.println("File does not exist.");
+            System.out.println("File does not exist.");
         } catch (IOException e) {
             System.out.println("IO Error " + e);
         }
@@ -57,28 +59,14 @@ public class CampController implements Serializable
     {
         camps.add(new Camp(campName, region, regCloseDate, userGroup, location, totalSlots, campCommitteeSlot, description, staff, true));
     }
-
-    public static<T> void displayCamps(List<T> camps) {
-        if (camps.isEmpty()) {
-            System.out.println("None");
-        } else {
-            for (var it = camps.listIterator(); it.hasNext(); ) {
-                T t = it.next();
-                System.out.println(it.previousIndex() + ": " + t.toString());
+    public void deleteCamp(Camp camp, UserController userController)
+    {
+        var users = userController.getUsers(camp.getStudentNames());
+        for (var user: users) {
+            if (user instanceof Student student) {
+                student.removeCamp(camp);
             }
         }
-    }
-
-    public static Camp selectCamp(List<Camp> camps) {
-        System.out.println("Select a camp: ");
-        Scanner scanner = new Scanner(System.in);
-        int campChoice = scanner.nextInt();
-        scanner.nextLine();
-        try {
-            return camps.get(campChoice);
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Not a valid selection.");
-        }
-        return null;
+        camps.remove(camp);
     }
 }

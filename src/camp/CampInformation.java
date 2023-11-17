@@ -1,14 +1,15 @@
 package camp;
 
 import java.io.Serializable;
+import java.lang.reflect.Modifier;
 import java.time.LocalDate;
-import java.util.Timer;
+import java.util.*;
 
 import user.Staff;
 import utils.TimeRegion;
 
 
-public class CampInformation implements Serializable
+public final class CampInformation implements Serializable
 {
 	private static final int MAX_COMMITTEE_SLOTS = 10;
     private String campName;
@@ -131,5 +132,18 @@ public class CampInformation implements Serializable
     public String getInCharge()
     {
     	return inCharge;
+    }
+
+    public Map<String, String> getPairs() {
+        Map<String, String> pairs = new HashMap<>();
+        for (var member: this.getClass().getDeclaredFields()) {
+            if (Modifier.isStatic(member.getModifiers()))
+                continue;
+            try {
+                pairs.put(member.getName(), member.get(this).toString());
+            } catch (IllegalAccessException ignored) {
+            }
+        }
+        return pairs;
     }
 }

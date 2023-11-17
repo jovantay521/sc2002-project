@@ -1,13 +1,11 @@
 package screen;
 
-import camp.Camp;
 import camp.CampController;
+import camp.CampControllerException;
+import camp.Enquiry;
+import screen.enquiry.StudentEnquiryScreen;
 import user.Student;
-import user.StudentCommittee;
 import user.UserController;
-
-import static camp.CampController.displayCamps;
-import static camp.CampController.selectCamp;
 
 public class StudentScreen extends Screen {
     protected Student student;
@@ -19,12 +17,12 @@ public class StudentScreen extends Screen {
     public Screen display() {
         System.out.println("--------------------------");
         System.out.println("Logging in as " + student.getName());
-        Camp selectedCamp;
 
         System.out.println("Camps: ");
         var camps = campController.getVisibleCamps(student);
-        displayCamps(camps);
+        displayContents(camps);
 
+        System.out.println();
         System.out.println("Options: ");
         System.out.println("0: Register as StudentAttendee.");
         System.out.println("1: Register as StudentCommittee.");
@@ -38,41 +36,65 @@ public class StudentScreen extends Screen {
         scanner.nextLine();
         return switch (choice) {
             case 0 -> {
-                if ((selectedCamp = selectCamp(camps)) != null && student.checkTimeConflicts(selectedCamp)) {
+                try {
+                    System.out.println("Select a camp: ");
+                    var selectedCamp = select(camps);
+                    selectedCamp.addStudent(student);
                     System.out.println("Registered student to " + selectedCamp + " as attendee.");
-                    try {
-                        selectedCamp.addStudent(student);
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("Error: " + e);
-                    }
+                } catch (ScreenException | CampControllerException e) {
+                    System.out.println(e.getMessage());
                 }
                 yield this;
             }
             case 1 -> {
-                if ((selectedCamp = selectCamp(camps)) != null && student.checkTimeConflicts(selectedCamp)) {
-                    System.out.println("Registered student to " + selectedCamp + " as committee.");
-                    try {
-                        selectedCamp.addStudentCommittee(student);
-                        var committeeMember = userController.convertTo(student, selectedCamp);
-                        yield new StudentCommitteeScreen(userController, campController, committeeMember);
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("Error: " + e);
-                    }
+                try {
+                    System.out.println("Select a camp: ");
+                    var selectedCamp = select(camps);
+                    selectedCamp.addStudentCommittee(student);
+                    var committeeMember = userController.convertTo(student, selectedCamp);
+                    yield new StudentCommitteeScreen(userController, campController, committeeMember);
+                } catch (ScreenException | CampControllerException e) {
+                    System.out.println(e.getMessage());
                 }
                 yield this;
             }
+            case 2 -> {
+               try {
+                    System.out.println("Select a camp: ");
+                    var selectedCamp = select(camps);
+                    System.out.println("Type out your enquiry!");
+                    var enquiry = scanner.nextLine();
+                    selectedCamp.addEnquiries(student, new Enquiry(enquiry, student.getUserID()));
+                    System.out.println("Enquiry submitted!");
+               } catch (ScreenException e) {
+                   System.out.println(e.getMessage());
+               }
+                yield this;
+            }
             case 3 -> {
-                if ((selectedCamp = selectCamp(camps)) != null) {
+                try {
+                    System.out.println("Select a camp: ");
+                    var selectedCamp = select(camps);
                     yield new StudentEnquiryScreen(userController, campController, student, selectedCamp);
+                } catch (ScreenException e) {
+                    System.out.println(e.getMessage());
+                }
+                yield this;
+            }
+            case 4 -> {
+                try {
+                    System.out.println("Select a camp: ");
+                    var selectedCamp = select(camps);
+                    System.out.println("Requested withdraw for" + selectedCamp);
+                    selectedCamp.removeStudent(student);
+                } catch (ScreenException | CampControllerException e) {
+                    System.out.println(e.getMessage());
                 }
                 yield this;
             }
             case 7 -> new UserLoginScreen(userController, campController);
             case 8 -> {
-                System.out.println("Choose new password: ");
-                var password = scanner.nextLine();
-                student.changePassword(password);
-                System.out.println("Password Changed.");
+                changePassword(student);
                 yield this;
             }
             case 9 -> null;

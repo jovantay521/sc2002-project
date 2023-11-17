@@ -1,4 +1,5 @@
 import camp.CampController;
+import camp.CampControllerException;
 import user.Staff;
 import user.Student;
 import user.UserController;
@@ -54,12 +55,16 @@ public class TestMain {
 
         Student student = (Student) userController.verifyLogin("YCHERN", "password");
         var camps = campController.getVisibleCamps(student);
-        camps.get(0).addStudent(student);
+        try {
+            camps.get(0).addStudent(student);
+        } catch (CampControllerException ignored) {
+        }
+
 
         TestGroup("Conflicts in date should be spotted.", () -> {
             try {
                 camps.get(1).addStudent(student);
-            } catch (IllegalArgumentException e) {
+            } catch (CampControllerException e) {
                 return true;
             }
             return false;
@@ -73,7 +78,7 @@ public class TestMain {
             try {
                 camps.get(0).addStudent(student);
                 return false;
-            } catch (IllegalArgumentException e) {
+            } catch (CampControllerException e) {
                 return true;
             }
         });
