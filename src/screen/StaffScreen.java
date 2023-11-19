@@ -6,6 +6,7 @@ import user.UserController;
 import utils.TimeRegion;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class StaffScreen extends Screen {
@@ -38,6 +39,22 @@ public class StaffScreen extends Screen {
         scanner.nextLine();
         return switch (choice) {
             case 0 -> {
+                boolean validSDate = false;
+            	boolean validEDate = false;
+            	boolean validRCDate = false;
+
+                boolean validTSVal = false;
+                boolean validCSVal = false;
+
+                boolean validUG = false;
+                boolean validLoca = false;
+
+                int totalSlots = 0;
+                int campCommitteeSlots = 0;
+
+                String userGroup = " ";
+                String location = " ";
+            	
                 LocalDate startDate = null;
                 LocalDate endDate = null;
                 LocalDate registrationDeadline = null;
@@ -45,52 +62,169 @@ public class StaffScreen extends Screen {
                 System.out.println("Choose a camp name: ");
                 var name = scanner.nextLine();
 
-                while(startDate == null) {
-	                try {
+                do
+                {
+	                try
+	                {
 		                System.out.println("Enter the start date of Camp (yyyy-MM-dd): ");
 		                String sDate = scanner.nextLine();
-		                startDate = LocalDate.parse(sDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		                LocalDate SelectedSDate = LocalDate.parse(sDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                        if(SelectedSDate.isBefore(LocalDate.now()))
+                        {
+                            System.out.println("Error: Start date cannot be in the past. Please enter a future date.");
+                        }
+                        else
+                        {
+                            DateTimeFormatter sformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		                    startDate = SelectedSDate;
+		                    validSDate = true;
+                        }
 	                }
-	                catch(DateTimeException e)  {
+	                catch(DateTimeException e)
+	                {
 	                	System.out.println("Error: Invalid date format. Please enter a date in the format yyyy-MM-dd.");	
+                       
 	                }
-                }
+                }while(!validSDate);
                 
-                while(endDate == null)
+                do
                 {
-                	try {
+                	try
+                	{
 	                	System.out.println("Enter the end date of Camp (yyyy-MM-dd): ");
 	                    String eDate = scanner.nextLine();
-	                    endDate = LocalDate.parse(eDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                	}  catch(DateTimeException e)  {
+	                    LocalDate SelectedEDate = LocalDate.parse(eDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                        if(SelectedEDate.isAfter(startDate))
+                        {
+                            DateTimeFormatter eformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	                        endDate = SelectedEDate;
+	                        validEDate = true;
+                        }
+                        else
+                        {
+                            System.out.println("Error: End date must be after the start date. Please enter a valid end date.");
+                        }
+	                    
+                	}
+                	catch(DateTimeException e)
+                	{
                 		System.out.println("Error: Invalid date format. Please enter a date in the format yyyy-MM-dd.");
                 	}
-                }
-
-                while (registrationDeadline == null) {
-                	try {
+                }while(!validEDate);
+                
+                
+                do
+                {
+                	try
+                	{
 	                	System.out.println("Enter the registration closing date of the Camp (yyyy-MM-dd): ");
 	                    String rcDate = scanner.nextLine();
-	                    registrationDeadline = LocalDate.parse(rcDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                	} catch(DateTimeException e)  {
-                		System.out.println("Error: Invalid date format. Please enter a date in the format yyyy-MM-dd.");
+	                    LocalDate SelectedRDate = LocalDate.parse(rcDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                        if(SelectedRDate.isBefore(LocalDate.now()))
+                        {
+                            System.out.println("Error: Register date cannot be in the past. Please enter a future date.");
+                        }
+                        else if(SelectedRDate.isAfter(startDate))
+                        {
+                            System.out.println("Error: Register date cannot be after start date. Please enter a valid register date.");
+                        }
+                        else
+                        {
+                            DateTimeFormatter rcformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	                        registrationDeadline = SelectedRDate; 
+	                        validRCDate = true;
+                        }
                 	}
-                }
+                	catch(DateTimeException e)
+                	{
+                		System.out.println("Error: Invalid date format! Please enter a date in the format yyyy-MM-dd.");
+                	}
+                }while(!validRCDate);         
                 
-                System.out.println("Choose which user group this camp is open to: ");
-                var userGroup = scanner.nextLine();
+                do
+                {                    
+                        System.out.println("Choose which user group this camp is open to: ");
+                        userGroup = scanner.nextLine();
+                        
+                        if(!userGroup.isEmpty())
+                        {
+                        	 validUG = true;
+                        }
+                        else
+                        {
+                        	System.out.println("Error: Please do not leave user group empty.");
+                        }
+                }while(!validUG);
+              
+                do
+                {
+                	System.out.println("Choose the camp location: ");
+                    location = scanner.nextLine();
+                        
+                    if(!location.isEmpty())
+                    {
+                    	validLoca = true;
+                    }
+                    else
+                    {
+                    	System.out.println("Error: Please do not leave location empty.");
+                    }  
+                    System.out.println(location);
+                    System.out.println(validLoca);
+                }while(!validLoca);
                 
-                System.out.println("Choose the camp location: ");
-                var location = scanner.nextLine();
                 
                 System.out.println("Enter a short description for the camp: ");
                 var description = scanner.nextLine();
                 
-                System.out.println("Choose the total camp slots: ");
-                var totalSlots = scanner.nextInt();
-                
-                System.out.println("Choose the camp committee slots (max 10): ");
-                var campCommitteeSlots = scanner.nextInt();
+                do
+                {
+                    try
+                    {
+                        System.out.println("Choose the total camp slots: ");
+                        totalSlots = scanner.nextInt();
+
+                        if(totalSlots > 0)
+                        {
+                            validTSVal = true;
+                        }
+                        else
+                        {
+                            System.out.println("Please enter a positive integer for total camp slots");
+                        }
+                    }
+                    catch(InputMismatchException e)
+                    {
+                        System.out.println("Error: Invalid total camp slots! Please enter a valid positive integer for total camp slots.");
+                        scanner.nextLine();
+                    }
+                    
+                }while(!validTSVal);
+
+                do
+                {
+                    try
+                    {
+                        System.out.println("Choose the camp committee slots (max 10): ");
+                        campCommitteeSlots = scanner.nextInt();
+                        if(campCommitteeSlots > 0 && campCommitteeSlots < 11)
+                        {
+                            validCSVal = true;
+                        }
+                        else
+                        {
+                            System.out.println("Please enter a positive integer for camp committee slots within the range of 1 to 10");
+                        }
+                    }
+                    catch(InputMismatchException e)
+                    {
+                        System.out.println("Error: Invalid camp committee slots! Please enter a valid positive integer for camp committee slots.");
+                        scanner.next();
+                    }
+                }while(!validCSVal);
                  
                 campController.createCamp(staff, name, new TimeRegion(startDate, endDate), registrationDeadline, userGroup, location, totalSlots, campCommitteeSlots, description);
                 yield this;
