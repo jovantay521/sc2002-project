@@ -20,6 +20,7 @@ import utils.TimeRegion;
 
 public class Camp
 {
+    private static final String GlobalUserGroup = "NTU";
     private final Staff staff;
     // Student and StudentCommittee IDs
     private final List<String> attendees;
@@ -54,6 +55,10 @@ public class Camp
     
     public boolean isFullCommittee() {
         return committees.size() == campInfo.getCampCommitteeSlots();
+    }
+
+    public boolean isInUserGroup(String userGroup) {
+        return userGroup.equals(campInfo.getUserGroup());
     }
     
     protected void doStudentChecks(Student student) throws CampControllerException {
@@ -136,7 +141,7 @@ public class Camp
     // Checks if the user is a staff or the camp is set to visible.
     boolean isVisible(User user)
     {
-        return user instanceof Staff || visible;
+        return user instanceof Staff || (visible && (campInfo.getUserGroup().equals("NTU") || isInUserGroup(user.getFaculty())));
     }
     
     boolean isInCharge(Staff staff)

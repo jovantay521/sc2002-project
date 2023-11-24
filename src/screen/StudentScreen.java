@@ -22,8 +22,8 @@ public class StudentScreen extends Screen {
             System.out.println("Please change your password! Thank you.");
         }
 
-        System.out.println("Camps: ");
         var camps = campController.getVisibleCamps(student);
+        System.out.println("Camps: ");
         {
             int count = 0;
             for (var camp: camps) {
@@ -34,6 +34,7 @@ public class StudentScreen extends Screen {
 
         System.out.println();
         System.out.println("Options: ");
+        System.out.println("0: View all camps");
         System.out.println("0: Register as StudentAttendee.");
         System.out.println("1: Register as StudentCommittee.");
         System.out.println("2: Submit enquiries to a camp.");
@@ -47,6 +48,14 @@ public class StudentScreen extends Screen {
         scanner.nextLine();
         return switch (choice) {
             case 0 -> {
+//                System.out.println("Camps: ");
+//                {
+//                    int count = 0;
+//                    for (var camp: camps) {
+//                        System.out.println(count + ": " + camp + " " + camp.getRemainding() + " slots left.");
+//                        count++;
+//                    }
+//                }
                 try {
                     System.out.println("Select a camp: ");
                     var selectedCamp = select(camps);
@@ -58,6 +67,7 @@ public class StudentScreen extends Screen {
                 yield this;
             }
             case 1 -> {
+
                 try {
                     System.out.println("Select a camp: ");
                     var selectedCamp = select(camps);
