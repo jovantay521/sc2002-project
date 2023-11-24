@@ -143,36 +143,6 @@ public class Camp
     { 
     	return this.staff == staff; 
     }
-    
-   public enum Filter
-    {
-    	NO,
-    	CAMP_ATTENDEE,
-    	COMMITTEE
-    }
-    
-    public List<User> getAttendees(UserController user, Filter filter)
-    {
-    	List<User> result = new ArrayList<>();
-    	
-    	switch(filter)
-    	{
-    		case NO:
-    			result.addAll(user.getUsers(attendees));
-    			result.addAll(user.getUsers(committees));
-    			System.out.println("List of all attendees:");
-    			return result;
-    		case CAMP_ATTENDEE:
-    			System.out.println("List of all camp attendees:");
-    			return user.getUsers(attendees);
-    		case COMMITTEE:
-    			System.out.println("List of all camp committee:");
-    			return user.getUsers(committees);
-		default:
-				System.out.println("List of all camp attendees:");
-    			return user.getUsers(attendees);
-    	}
-    }
 
     @Override
     public String toString() 
@@ -194,6 +164,12 @@ public class Camp
     }
     public void generateAttendance(String filePath) {
         // TODO
+    }
+    public String getName() {
+        return campInfo.getCampName();
+    }
+    public String getLocation() {
+        return campInfo.getLocation();
     }
 
 }

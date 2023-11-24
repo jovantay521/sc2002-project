@@ -33,9 +33,11 @@ public class StudentCommitteeScreen extends Screen {
         System.out.println("4. Leave attendee camps.");
         System.out.println("5: View details of committee camp.");
         System.out.println("6: Generate attendance report.");
-        System.out.println("7: Logout.");
-        System.out.println("8: Change Password.");
-        System.out.println("9: Quit.");
+        System.out.println("7: Select filters to camps.");
+        System.out.println("8: Logout.");
+        System.out.println("9: Change Password.");
+        System.out.println("10: Quit.");
+
 
         int choice = scanner.nextInt();
         scanner.nextLine();
@@ -98,12 +100,16 @@ public class StudentCommitteeScreen extends Screen {
                 }
                 yield this;
             }
-            case 7 -> new UserLoginScreen(userController, campController);
-            case 8 -> {
+            case 7 -> {
+                selectFilter(studentCommittee);
+                yield this;
+            }
+            case 8 -> new UserLoginScreen(userController, campController);
+            case 9 -> {
                 changePassword(studentCommittee);
                 yield this;
             }
-            case 9 -> null;
+            case 10 -> null;
             default -> this;
         };
     }

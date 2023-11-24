@@ -16,10 +16,35 @@ public class CampController
 {
     private final List<Camp> camps = new ArrayList<>();
 
+    public static Filter DateFilter(TimeRegion timeRegion)
+    {
+
+        return (Camp camp) -> timeRegion.fullyCover(camp.getRegion());
+    }
+    public static Filter LocationFilter(String location)
+    {
+        return (Camp camp) -> camp.getLocation().equals(location);
+    }
+
+    public interface Filter {
+        public boolean accept(Camp camp);
+    }
+
     // Returns list of camps that can be viewed by user
     public List<Camp> getVisibleCamps(User user)
     {
-        return camps.stream().filter(camp -> camp.isVisible(user)).collect(Collectors.toList());
+        return getVisibleCamps(user, user.getFilters().values().stream().toList());
+    }
+
+    // Returns list of camps that can be viewed by user with a filter
+    public List<Camp> getVisibleCamps(User user, List<Filter> filters)
+    {
+        var visibleCamps = camps.stream().filter(camp -> camp.isVisible(user));
+        for (Filter filter: filters)
+            visibleCamps = visibleCamps.filter(filter::accept);
+
+        visibleCamps = visibleCamps.sorted((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
+        return visibleCamps.collect(Collectors.toList());
     }
     
     // Returns list of camps that belongs to staff

@@ -4,12 +4,12 @@ import screen.UserLoginScreen;
 import user.*;
 import utils.TimeRegion;
 
-import java.io.*;
+import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) {
+        System.out.println(Paths.get(".").toAbsolutePath().normalize().toString());
         UserController userController = UserController.loadFrom("data/users.csv").orElseGet(() -> {
             var tempController = new UserController();
             tempController.addStudents("../data/student_list.csv");

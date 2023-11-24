@@ -50,11 +50,17 @@ public class TimeRegion implements Serializable {
         return start.isBefore(region.end) && end.isAfter(region.start);
     }
 
+    /**
+     * Check if there is full coverage in time
+     * @param region Region to compare against
+     * @return True if there is full coverage, false otherwise
+     */
+    public boolean fullyCover(TimeRegion region) {
+        return start.isBefore(region.start) && end.isAfter(region.end);
+    }
+
     @Override
     public String toString() {
         return "[From: " + start + ", End: " + end + "]";
-    }
-    public String getRepresentation() {
-        return String.join(" ", start.toString(), end.toString());
     }
 }

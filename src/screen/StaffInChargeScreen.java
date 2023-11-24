@@ -3,6 +3,7 @@ package screen;
 import java.util.ArrayList;
 import java.util.List;
 
+import camp.Camp;
 import camp.CampController;
 import screen.enquiry.StaffInChargeEnquiryScreen;
 import screen.suggestion.StaffInChargeSuggestionScreen;
@@ -39,22 +40,10 @@ public class StaffInChargeScreen extends StaffScreen {
         return switch (choice) {
             case 0 -> {
                 try {
-                	List<User> result = new ArrayList<>();
-//                	 public enum Filter
-//                	 {
-//                	    	NO,
-//                	    	CAMP_ATTENDEE,
-//                	    	COMMITTEE
-//                	 }
-               
                     System.out.println("Select a camp: ");
                     var selectedCamp = select(camps);
-                    //result = selectedCamp.getAttendees(userController, selectedCamp.Filter.NO);
-                    for(int i=0; i<result.size(); i++)
-                    {
-                    	System.out.println(i+1 + ". " + result.get(i).getName());
-                    }
-                    //displayContents(selectedCamp.getStudentNames());
+                    System.out.println();
+                    displayContents(selectedCamp.getStudentNames());
                 } catch (ScreenException e) {
                     System.out.println(e.getMessage());
                 }

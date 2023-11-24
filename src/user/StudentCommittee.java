@@ -22,6 +22,7 @@ public class StudentCommittee extends Student {
      */
     public StudentCommittee(Student student, Camp camp) {
         this(student.getName(), student.getUserID(), student.getPassword(), student.getFaculty(), camp);
+        filters = student.getFilters();
     }
 
     /**

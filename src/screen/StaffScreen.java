@@ -1,5 +1,6 @@
 package screen;
 
+import camp.Camp;
 import camp.CampController;
 import user.Staff;
 import user.UserController;
@@ -30,7 +31,8 @@ public class StaffScreen extends Screen {
         System.out.println("0: Create camp.");
         System.out.println("1: Edit camp.");
         System.out.println("2: Delete camp.");
-        System.out.println("6: Enter camp submenu (To view members, change details etc.).");
+        System.out.println("5: Enter camp submenu (To view members, change details etc.).");
+        System.out.println("6: Select filters to camps.");
         System.out.println("7: Logout.");
         System.out.println("8: Change Password.");
         System.out.println("9: Quit.");
@@ -259,7 +261,11 @@ public class StaffScreen extends Screen {
                 }
                 yield this;
             }
-            case 6 -> new StaffInChargeScreen(userController, campController, staff);
+            case 5 -> new StaffInChargeScreen(userController, campController, staff);
+            case 6 -> {
+                selectFilter(staff);
+                yield this;
+            }
             case 7 -> new UserLoginScreen(userController, campController);
             case 8 -> {
                 changePassword(staff);

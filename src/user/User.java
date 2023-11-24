@@ -1,6 +1,10 @@
 package user;
 
-import java.io.Serializable;
+import camp.CampController;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * User is the base-class for all users in the CMS.
@@ -9,19 +13,24 @@ public class User {
     /**
      * Name of user, indicated in CSV file.
      */
-    private final String name;
+    protected final String name;
     /**
      * Unique Identification String, indicated in CSV file.
      */
-    private final String userID;
+    protected final String userID;
     /**
      * Password for verification, defaulted to "password".
      */
-    private String password;
+    protected String password;
     /**
      * Faculty of user, used for filtering options.
      */
-    private final String faculty;
+    protected final String faculty;
+
+    /**
+     * Filters for each individual.
+     */
+    protected Map<String, CampController.Filter> filters;
 
     /**
      * Constructor of user.
@@ -35,6 +44,7 @@ public class User {
         this.userID = userID;
         this.password = password;
         this.faculty = faculty;
+        this.filters = new HashMap<>();
     }
 
     /**
@@ -67,6 +77,16 @@ public class User {
      */
     public String getFaculty() {
         return faculty;
+    }
+
+    public Map<String, CampController.Filter> getFilters() {
+        return filters;
+    }
+    public void addFilter(String filterName, CampController.Filter filter) {
+        filters.put(filterName, filter);
+    }
+    public void deleteFilter(String filterName) {
+        filters.remove(filterName);
     }
 
     /**

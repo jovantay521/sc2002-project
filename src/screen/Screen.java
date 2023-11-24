@@ -4,7 +4,10 @@ import camp.CampController;
 import user.User;
 import user.UserController;
 import user.Student;
+import utils.TimeRegion;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -44,5 +47,69 @@ public abstract class Screen {
         var password = scanner.nextLine();
         user.changePassword(password);
     }
+    protected static void selectFilter(User user) {
+        System.out.println("Currently in use filters.");
+        var filters = user.getFilters().keySet().stream().toList();
 
+        displayContents(filters);
+
+        while (true) {
+            System.out.println();
+            System.out.println("Options: ");
+            System.out.println("0: Add Date filter");
+            System.out.println("1: Add Location filter");
+            System.out.println("8: Delete filter");
+            System.out.println("9: Return.");
+
+            int filterChoice = scanner.nextInt();
+            scanner.nextLine();
+            switch (filterChoice) {
+                case 0 -> {
+                    System.out.println("What is your preferred date (indicate start) (YYYY-MM-DD)?");
+                    var start = scanner.nextLine();
+                    LocalDate startDate = null;
+                    LocalDate endDate = null;
+
+                    while (startDate == null) {
+                        try {
+                            startDate = LocalDate.parse(start);
+                        } catch (DateTimeParseException e) {
+                            System.out.println("Please enter a valid date.");
+                        }
+                    }
+
+                    System.out.println("What is your preferred date (indicate end) (YYYY-MM-DD)?");
+                    var end = scanner.nextLine();
+                    while (endDate == null) {
+                        try {
+                            endDate = LocalDate.parse(end);
+                        } catch (DateTimeParseException e) {
+                            System.out.println("Please enter a valid date.");
+                        }
+                    }
+
+                    user.addFilter("Date " + start + " " + end , CampController.DateFilter(new TimeRegion(
+                           startDate, endDate
+                    )));
+                }
+                case 1 -> {
+                    System.out.println("What is your preferred location?");
+                    String location = scanner.nextLine();
+                    user.addFilter("Location", CampController.LocationFilter(location));
+                }
+                case 8 -> {
+                    try {
+                        System.out.println("Choose which filter to delete.");
+                        var filter = select(filters);
+                        user.deleteFilter(filter);
+                    } catch (ScreenException exception) {
+                        System.out.println(exception.getMessage());
+                    }
+                }
+                case 9 -> {
+                    return;
+                }
+            }
+        }
+    }
 }

@@ -29,6 +29,7 @@ public class StudentScreen extends Screen {
         System.out.println("2: Submit enquiries to a camp.");
         System.out.println("3: View sent enquiries.");
         System.out.println("4: Withdraw from camp.");
+        System.out.println("6: Select filters to camps.");
         System.out.println("7: Logout.");
         System.out.println("8: Change Password.");
         System.out.println("9: Quit.");
@@ -92,6 +93,10 @@ public class StudentScreen extends Screen {
                 } catch (ScreenException | CampControllerException e) {
                     System.out.println(e.getMessage());
                 }
+                yield this;
+            }
+            case 6 -> {
+                selectFilter(student);
                 yield this;
             }
             case 7 -> new UserLoginScreen(userController, campController);
