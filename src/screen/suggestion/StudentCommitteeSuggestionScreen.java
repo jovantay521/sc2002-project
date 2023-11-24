@@ -2,6 +2,7 @@ package screen.suggestion;
 
 import camp.Camp;
 import camp.CampController;
+import camp.Suggestion;
 import screen.Screen;
 import screen.ScreenException;
 import screen.StudentCommitteeScreen;
@@ -25,14 +26,26 @@ public class StudentCommitteeSuggestionScreen extends StudentCommitteeScreen {
 
         System.out.println();
         System.out.println("Options: ");
-        System.out.println("0: Edit suggestion");
-        System.out.println("1: Delete suggestion");
+        System.out.println("0: Send suggestion");
+        System.out.println("1: Edit suggestion");
+        System.out.println("2: Delete suggestion");
         System.out.println("9: Back.");
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+        int choice = -1;
+        try {
+            choice = getInt();
+        } catch (ScreenException e) {
+            System.out.println(e.getMessage());
+        }
+
         return switch (choice) {
             case 0 -> {
+                System.out.println("Suggestion: ");
+                var suggestion = scanner.nextLine();
+                camp.addSuggestion(studentCommittee, new Suggestion(suggestion, studentCommittee.getUserID()));
+                yield this;
+            }
+            case 1 -> {
                 try {
                     System.out.println("Select suggestion: ");
                     var selectedSuggestion = select(suggestions);
@@ -45,7 +58,7 @@ public class StudentCommitteeSuggestionScreen extends StudentCommitteeScreen {
                 }
                 yield this;
             }
-            case 1 -> {
+            case 2 -> {
                 try {
                     System.out.println("Select suggestion: ");
                     var selectedSuggestion = select(suggestions);

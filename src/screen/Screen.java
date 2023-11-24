@@ -27,6 +27,7 @@ public abstract class Screen {
             scanner.nextLine();
             return indexableContainable.get(choice);
         } catch (InputMismatchException e) {
+            scanner.nextLine();
             throw new ScreenException("Use a number for selection.");
         } catch (IndexOutOfBoundsException e) {
             throw new ScreenException("Not a valid selection.");
@@ -41,6 +42,17 @@ public abstract class Screen {
                 System.out.println(it.previousIndex() + ": " + t.toString());
             }
         }
+    }
+    public static int getInt() throws ScreenException {
+        int ret;
+        try {
+            ret = scanner.nextInt();
+            scanner.nextLine();
+        } catch (InputMismatchException e) {
+            scanner.nextLine();
+            throw new ScreenException("Use a number for selection.");
+        }
+        return ret;
     }
     protected static void changePassword(User user) {
         System.out.println("Choose new password: ");

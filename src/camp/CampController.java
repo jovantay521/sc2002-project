@@ -59,8 +59,11 @@ public class CampController
         camps.add(newCamp);
         return newCamp;
     }
-    public void deleteCamp(Camp camp, UserController userController)
+    public void deleteCamp(Staff staff, Camp camp, UserController userController) throws CampControllerException
     {
+        if (!camp.isOwner(staff)) {
+            throw new CampControllerException("Not the owner you cannot remove it.");
+        }
         var users = userController.getUsers(camp.getStudentNames());
         for (var user: users) {
             if (user instanceof Student student) {

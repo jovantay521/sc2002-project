@@ -35,8 +35,13 @@ public class StaffInChargeScreen extends StaffScreen {
         System.out.println("4: Generate performance report: ");
         System.out.println("9: Back.");
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+        int choice = -1;
+        try {
+            choice = getInt();
+        } catch (ScreenException e) {
+            System.out.println(e.getMessage());
+        }
+
         return switch (choice) {
             case 0 -> {
                 try {

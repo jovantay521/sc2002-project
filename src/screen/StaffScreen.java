@@ -2,12 +2,14 @@ package screen;
 
 import camp.Camp;
 import camp.CampController;
+import camp.CampControllerException;
 import user.Staff;
 import user.UserController;
 import utils.TimeRegion;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class StaffScreen extends Screen {
@@ -15,6 +17,17 @@ public class StaffScreen extends Screen {
     public StaffScreen(UserController userController, CampController campController, Staff staff) {
         super(userController, campController);
         this.staff = staff;
+    }
+
+    private void printCamp(List< Camp > camps) {
+        System.out.println("Camps: ");
+        {
+            int count = 0;
+            for (var camp : camps) {
+                System.out.println(count + ": " + camp);
+                count++;
+            }
+        }
     }
 
     @Override
@@ -26,26 +39,33 @@ public class StaffScreen extends Screen {
             System.out.println("Please change your password! Thank you.");
         }
 
-        System.out.println("Camps: ");
         var camps = campController.getVisibleCamps(staff);
-        displayContents(camps);
 
         System.out.println();
         System.out.println("Options: ");
-        System.out.println("0: Create camp.");
-        System.out.println("1: Edit camp.");
-        System.out.println("2: Delete camp.");
-        System.out.println("3: Toggle visibility camp.");
+        System.out.println("0: View camps.");
+        System.out.println("1: Create camp.");
+        System.out.println("2: Edit camp.");
+        System.out.println("3: Delete camp.");
+        System.out.println("4: Toggle visibility camp.");
         System.out.println("5: Enter camp submenu (To view members, change details etc.).");
         System.out.println("6: Select filters to camps.");
         System.out.println("7: Logout.");
         System.out.println("8: Change Password.");
         System.out.println("9: Quit.");
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+        int choice = -1;
+        try {
+            choice = getInt();
+        } catch (ScreenException e) {
+            System.out.println(e.getMessage());
+        }
         return switch (choice) {
             case 0 -> {
+                printCamp(camps);
+                yield this;
+            }
+            case 1 -> {
                 boolean validSDate = false;
             	boolean validEDate = false;
             	boolean validRCDate = false;
@@ -236,9 +256,10 @@ public class StaffScreen extends Screen {
                 campController.createCamp(staff, name, new TimeRegion(startDate, endDate), registrationDeadline, userGroup, location, totalSlots, campCommitteeSlots, description);
                 yield this;
             }
-            case 1 -> {
+            case 2 -> {
                 try {
                     System.out.println("Select a camp: ");
+                    printCamp(camps);
                     var selectedCamp = select(camps);
 
                     var details = selectedCamp.getDetailsAsValue();
@@ -256,17 +277,18 @@ public class StaffScreen extends Screen {
 
                 yield this;
             }
-            case 2 -> {
+            case 3 -> {
                 try {
                     System.out.println("Select a camp: ");
+                    printCamp(camps);
                     var selectedCamp = select(camps);
-                    campController.deleteCamp(selectedCamp, userController);
-                } catch (ScreenException e) {
+                    campController.deleteCamp(staff, selectedCamp, userController);
+                } catch (ScreenException | CampControllerException e) {
                     System.out.println(e.getMessage());
                 }
                 yield this;
             }
-            case 3 -> {
+            case 4 -> {
                 try {
                     var campInCharge = campController.getInChargeCamps(staff);
                     if (!campInCharge.isEmpty()) {

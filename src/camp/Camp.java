@@ -154,6 +154,9 @@ public class Camp
         visible = !visible;
         return ret;
     }
+    public boolean isOwner(Staff staff) {
+        return staff == this.staff;
+    }
     @Override
     public String toString() 
     {
