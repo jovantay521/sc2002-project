@@ -23,7 +23,7 @@ public class Main {
             LocalDate eDate = LocalDate.of(2023, 12, 15);
             LocalDate rcDate = LocalDate.of(2023, 11, 30);
 
-            tempController.createCamp((Staff) userController.verifyLogin("HUKUMAR", "password"), "Picnic Camp", new TimeRegion(sDate, eDate), rcDate, "NTU", "NorthSpine", 30, 10, "Holiday Camp 2023");
+            tempController.createCamp((Staff) userController.verifyLogin("HUKUMAR", "password"), "Picnic Camp", new TimeRegion(sDate, eDate), rcDate, "NTU", "NorthSpine", 3, 2, "Holiday Camp 2023");
             return tempController;
         });
 

@@ -35,6 +35,7 @@ public class StaffInChargeScreen extends StaffScreen {
             case 0 -> {
                 try {
                     var selectedCamp = select(camps);
+                    //staff.generateNameList(selectedCamp);
                     displayContents(selectedCamp.getStudentNames());
                 } catch (ScreenException e) {
                     System.out.println(e.getMessage());

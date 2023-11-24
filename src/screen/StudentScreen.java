@@ -40,7 +40,7 @@ public class StudentScreen extends Screen {
                     System.out.println("Select a camp: ");
                     var selectedCamp = select(camps);
                     selectedCamp.addStudent(student);
-                    System.out.println("Registered student to " + selectedCamp + " as attendee.");
+                    //System.out.println("Registered student to " + selectedCamp + " as attendee.");
                 } catch (ScreenException | CampControllerException e) {
                     System.out.println(e.getMessage());
                 }
@@ -83,9 +83,10 @@ public class StudentScreen extends Screen {
             }
             case 4 -> {
                 try {
+                	displayContents(student.attendingCamps);
                     System.out.println("Select a camp: ");
-                    var selectedCamp = select(camps);
-                    System.out.println("Requested withdraw for" + selectedCamp);
+                    var selectedCamp = select(student.attendingCamps);
+                    System.out.println("Requested withdraw for " + selectedCamp);
                     selectedCamp.removeStudent(student);
                 } catch (ScreenException | CampControllerException e) {
                     System.out.println(e.getMessage());
