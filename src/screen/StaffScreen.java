@@ -268,14 +268,19 @@ public class StaffScreen extends Screen {
             }
             case 3 -> {
                 try {
-                    System.out.println("Select a camp: ");
+                    var campInCharge = campController.getInChargeCamps(staff);
+                    if (!campInCharge.isEmpty()) {
+                        System.out.println("Select a camp: ");
+                    } else {
+                        throw new ScreenException("Not in charge of any camps!");
+                    }
                     {
                         int i = 0;
-                        for (var camp: camps) {
+                        for (var camp: campInCharge) {
                             System.out.println(i + ": " + camp + " currently " + (camp.getVisibility() ? "visible" : "not visible"));
                         }
                     }
-                    var camp = select(camps);
+                    var camp = select(campInCharge);
                     camp.toggleVisibility();
                 } catch (ScreenException e) {
                     System.out.println(e.getMessage());
