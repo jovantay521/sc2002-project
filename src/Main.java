@@ -12,8 +12,8 @@ public class Main {
     public static void main(String[] args) {
         UserController userController = UserController.loadFrom("data/users.csv").orElseGet(() -> {
             var tempController = new UserController();
-            tempController.addStudents("data/student_list.csv");
-            tempController.addStaff("data/staff_list.csv");
+            tempController.addStudents("../data/student_list.csv");
+            tempController.addStaff("../data/staff_list.csv");
             return tempController;
         });
 
