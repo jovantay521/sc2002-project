@@ -4,6 +4,7 @@ import camp.CampController;
 import screen.enquiry.StaffInChargeEnquiryScreen;
 import screen.suggestion.StaffInChargeSuggestionScreen;
 import user.Staff;
+import user.StudentCommittee;
 import user.UserController;
 
 public class StaffInChargeScreen extends StaffScreen {
@@ -34,6 +35,7 @@ public class StaffInChargeScreen extends StaffScreen {
         return switch (choice) {
             case 0 -> {
                 try {
+                    System.out.println("Select a camp: ");
                     var selectedCamp = select(camps);
                     displayContents(selectedCamp.getStudentNames());
                 } catch (ScreenException e) {
@@ -43,6 +45,7 @@ public class StaffInChargeScreen extends StaffScreen {
             }
             case 1 -> {
                 try {
+                    System.out.println("Select a camp: ");
                     var selectedCamp = select(camps);
                     yield new StaffInChargeEnquiryScreen(userController, campController, staff, selectedCamp);
                 } catch (ScreenException e) {
@@ -52,11 +55,27 @@ public class StaffInChargeScreen extends StaffScreen {
             }
             case 2 -> {
                 try {
+                    System.out.println("Select a camp: ");
                     var selectedCamp = select(camps);
                     yield new StaffInChargeSuggestionScreen(userController, campController, staff, selectedCamp);
                 } catch (ScreenException e) {
                     System.out.println(e.getMessage());
                 }
+                yield this;
+            }
+            case 4 -> {
+                try {
+                    System.out.println("Select a camp: ");
+                    var selectedCamp = select(camps);
+                    var committees = userController.getUsers(selectedCamp.getCommittees()).stream().map(u -> (StudentCommittee) u).toList();
+                    System.out.println(committees.size());
+                    System.out.println("Where to save it.");
+                    var path = scanner.nextLine();
+                    userController.generatePerformance(path, committees);
+                } catch (ScreenException e) {
+
+                }
+
                 yield this;
             }
             case 9 -> new StaffScreen(userController, campController, staff);

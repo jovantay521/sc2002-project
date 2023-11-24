@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * User is the base-class for all users in the CMS.
  */
-public class User implements Serializable {
+public class User {
     /**
      * Name of user, indicated in CSV file.
      */
@@ -85,5 +85,13 @@ public class User implements Serializable {
      */
     public void changePassword(String newPassword) {
         password = newPassword;
+    }
+
+    /**
+     * Representation in csv file
+     * @return String that represents the user in a csv.
+     */
+    public String representation() {
+        return String.join(",", getClass().getTypeName(), name, userID, password, faculty);
     }
 }

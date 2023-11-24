@@ -1,8 +1,6 @@
 package camp;
 
-import java.io.Serializable;
-
-public final class Enquiry implements Serializable {
+public final class Enquiry {
     private String message;
     private String answer;
     private final String userID;

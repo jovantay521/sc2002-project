@@ -2,11 +2,13 @@ import camp.CampController;
 import camp.CampControllerException;
 import user.Staff;
 import user.Student;
+import user.User;
 import user.UserController;
 import utils.TimeRegion;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import static screen.Screen.displayContents;
 
 interface TestScenario {
     public boolean test();
@@ -24,11 +26,18 @@ public class TestMain {
     }
 
     public static void main(String[] args) {
+
+
+
+
+
+
         UserController userController = new UserController();
         CampController campController = new CampController();
 
         userController.addStudents("data/student_list.csv");
         userController.addStaff("data/staff_list.csv");
+
 
         campController.createCamp(
                 (Staff) userController.verifyLogin("HUKUMAR", "password"),
