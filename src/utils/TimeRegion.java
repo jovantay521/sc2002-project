@@ -54,4 +54,7 @@ public class TimeRegion implements Serializable {
     public String toString() {
         return "[From: " + start + ", End: " + end + "]";
     }
+    public String getRepresentation() {
+        return String.join(" ", start.toString(), end.toString());
+    }
 }

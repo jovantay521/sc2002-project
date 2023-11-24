@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * The main storage class of users in the CMS. Handles user registration, user saving and loading.
  */
-public class UserController implements Serializable {
+public class UserController {
     /**
      * Internal storage of users
      */
@@ -23,15 +23,17 @@ public class UserController implements Serializable {
      * @param userController Specify which store to retrieve from
      */
     public static void saveTo(String filePath, UserController userController) {
-        try (FileOutputStream s = new FileOutputStream(filePath)) {
-            ObjectOutputStream o = new ObjectOutputStream(s);
-            o.writeObject(userController);
-            o.flush();
-            o.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("S not found.");
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            userController.users.stream().map(User::representation).forEach(repr -> {
+                try {
+                    writer.write(repr);
+                    writer.newLine();
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            });
         } catch (IOException e) {
-            System.out.println("IO Error " + e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -41,15 +43,23 @@ public class UserController implements Serializable {
      * @return Returns {@code Optional.of(UserController)} if load was successful, otherwise returns {@code Optional.empty()}
      */
     public static Optional<UserController> loadFrom(String filePath) {
-        try (var s = new FileInputStream(filePath)) {
-            var o = new ObjectInputStream(s);
-            return Optional.of((UserController) o.readObject());
-        } catch (FileNotFoundException e) {
-            System.out.println("S not found.");
+        var userController = new UserController();
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
+            var lines = bufferedReader.lines();
+            lines.forEach(line -> {
+                var values = line.split(",");
+                if (values.length != 5) {
+                    throw new RuntimeException("Malformed input!");
+                }
+                switch (values[0]) {
+                    case "user.Student", "user.StudentCommittee" -> userController.users.add(new Student(values[1].trim(), values[2].trim(), values[3].trim(), values[4].trim()));
+                    case "user.Staff" -> userController.users.add(new Staff(values[1].trim(), values[2].trim(), values[3].trim(), values[4].trim()));
+                    default -> throw new RuntimeException("Malformed type!");
+                }
+            });
+            return Optional.of(userController);
         } catch (IOException e) {
-            System.out.println("IO Error " + e);
-        } catch (ClassNotFoundException e) {
-            System.out.println("Class Error " + e);
+            System.out.println(e.getMessage());
         }
         return Optional.empty();
     }
@@ -139,5 +149,21 @@ public class UserController implements Serializable {
         var newUser = new StudentCommittee(committeeStudent, joinCamp);
         users.add(newUser);
         return newUser;
+    }
+
+    /**
+     * Generates a performance report to disk.
+     * @param filePath File location to save at.
+     * @param committees List of committees member to parse.
+     */
+    public void generatePerformance(String filePath, List<StudentCommittee> committees) {
+        try (var bufferedWriter = new BufferedWriter(new FileWriter(filePath))) {
+            for (var committee: committees) {
+                bufferedWriter.write(String.join(",", committee.getUserID(), String.valueOf(committee.getPoints())));
+                bufferedWriter.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
