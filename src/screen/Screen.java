@@ -3,6 +3,7 @@ package screen;
 import camp.CampController;
 import user.User;
 import user.UserController;
+import user.Student;
 
 import java.util.InputMismatchException;
 import java.util.List;

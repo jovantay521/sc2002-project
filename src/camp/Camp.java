@@ -25,6 +25,7 @@ public class Camp
     private final List<String> committees;
     private final List<Suggestion> suggestions;
     private final List<Enquiry> enquiries;
+    private final List<String> leftAttendees;
     private final CampInformation campInfo;
     private boolean visible;
     
@@ -39,12 +40,33 @@ public class Camp
         suggestions = new ArrayList<>();
         attendees = new ArrayList<>();
         committees = new ArrayList<>();
+        leftAttendees = new ArrayList<>();
     }
 
     public Map<String, String> getDetailsAsValue() {
         return campInfo.getPairs();
     }
 
+    boolean isFullAttendee()
+    {
+    	if(attendees.size() == campInfo.getTotalSlots())
+    	{
+    		return true;
+    	}
+    	else
+    		return false;
+    }
+    
+    public boolean isFullCommittee()
+    {
+    	if(committees.size() == campInfo.getCampCommitteeSlots())
+    	{
+    		return true;
+    	}
+    	else
+    		return false;
+    }
+    
     protected void doStudentChecks(Student student) throws CampControllerException {
         if (Stream.concat(attendees.stream(), committees.stream()).anyMatch(s -> s.equals(student.getUserID()))) {
             throw new CampControllerException("The student is already in the camp.");
@@ -56,37 +78,77 @@ public class Camp
             throw new CampControllerException("Student cannot join this camp due to conflicts in time.");
         }
     }
+    
     public void addStudent(Student student) throws CampControllerException {
         // TODO: Check for full slots.
         // if camp.isFullAttendee()
-        doStudentChecks(student);
-        attendees.add(student.getUserID());
-        student.joinCamp(this);
+    	boolean left = false;
+    	
+    	for(int i=0; i<leftAttendees.size(); i++)
+    	{
+    		if(leftAttendees.get(i).equals(student.getUserID()))
+    		{
+    			left = true;
+    			break;
+    		}		
+    	}
+    	if(left == false)
+    	{
+    		if(isFullAttendee())
+        	{
+        		System.out.println("This camp is full! Please join another camp.");
+        	}
+        	else
+        	{
+        		doStudentChecks(student);
+                attendees.add(student.getUserID());
+                student.joinCamp(this);
+                System.out.println("Registered student to " + campInfo.getCampName() + " as attendee.");
+        	}
+    	}
+    	else
+    	{
+    		System.out.println("You are not allowed to join " + campInfo.getCampName() + " as you have left previously.");
+    	}
     }
 
     public void addStudentCommittee(Student student) throws CampControllerException {
         // TODO: Check for full slots.
         // if camp.isFullCommittee()
+    	
         if (student instanceof StudentCommittee) {
             throw new CampControllerException("Student is already a student committee!");
         }
-        doStudentChecks(student);
-        committees.add(student.getUserID());
-        student.joinCamp(this);
+        
+        if(isFullCommittee())
+        {
+        	System.out.println("Camp committee is full!");
+        }
+        else
+        {
+        	doStudentChecks(student);
+            committees.add(student.getUserID());
+            student.joinCamp(this);
+            System.out.println("Registered student to " + campInfo.getCampName() + " as camp committee member.");
+        }
     }
+    
     public void removeStudent(Student student) throws CampControllerException {
         if (committees.stream().anyMatch(s -> s.equals(student.getUserID()))) {
             throw new CampControllerException("A student committee cannot leave the camp!");
         }
         attendees.removeIf(s -> s.equals(student.getUserID()));
+        leftAttendees.add(student.getUserID());
         student.removeCamp(this);
     }
+    
     public void addSuggestion(Student student, Suggestion suggestion) {
         if (committees.stream().noneMatch(s -> s.equals(student.getUserID()))) {
             throw new RuntimeException("Only committee members can add suggestions");
         }
         suggestions.add(suggestion);
     }
+    
     public List<Suggestion> getSentSuggestions(Student student) {
         return suggestions.stream().filter(suggestion -> suggestion.getUserID().equals(student.getUserID())).toList();
     }
@@ -111,15 +173,32 @@ public class Camp
     public List<String> getStudentNames() {
         return Stream.concat(attendees.stream(), committees.stream()).toList();
     }
+    
     // Checks if the user is a staff or the camp is set to visible.
     boolean isVisible(User user)
     {
         return user instanceof Staff || visible;
     }
     
-    boolean isInCharge(Staff staff) 
+    boolean isInCharge(Staff staff)
     { 
     	return this.staff == staff; 
+    }
+    
+    public void getAttendees()
+    {
+    	for(int i=0; i<attendees.size(); i++)
+    	{
+    		System.out.println(i+1 + ". " + attendees.get(i));
+    	}
+    }
+    
+    public void getCommittees()
+    {
+    	for(int i=0; i<committees.size(); i++)
+    	{
+    		System.out.println(i+1 + ". " + committees.get(i));
+    	}
     }
     
     @Override
