@@ -24,6 +24,11 @@ public class TimeRegion implements Serializable {
     public TimeRegion(LocalDate start, LocalDate end) {
         this.start = start; this.end = end;
     }
+    
+    public LocalDate getStartTime()
+    {
+    	return start;
+    }
 
     /**
      * Adjust Start of Region

@@ -248,12 +248,54 @@ public class Camp
              e.printStackTrace();
          }
     }
+    
     public String getName() {
         return campInfo.getCampName();
     }
+    
     public String getLocation() {
         return campInfo.getLocation();
     }
-
+    
+    public void setCampCommSlots(int slots)
+    {
+    	campInfo.setCampCommitteeSlots(slots);
+    }
+    
+    public void setTotalSlots(int slots)
+    {
+    	campInfo.setTotalSlots(slots);
+    }
+    
+    public void setRegCloseDate(LocalDate regCloseDate)
+    {
+    	campInfo.setRegCloseDate(regCloseDate);
+    }
+    
+    public void setDescription(String description)
+    {
+    	campInfo.setDescription(description);
+    }
+    
+    public void setLocation(String location)
+    {
+    	campInfo.setLocation(location);
+    }
+    
+    public void setCampName(String campName)
+    {
+    	campInfo.setCampName(campName);
+    }
+    
+    public void setRegion(TimeRegion region)
+    {
+    	campInfo.setTimeRegion(region);
+    }
+    
+    public void setUserGroup(String userGrp)
+    {
+    	campInfo.setUserGroup(userGrp);
+    }
+    
     public int getRemainding() { return campInfo.getTotalSlots() - attendees.size() - committees.size(); }
 }

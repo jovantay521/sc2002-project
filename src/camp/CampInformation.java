@@ -50,6 +50,11 @@ public final class CampInformation
         return region;
     }
     
+    public void setTimeRegion(TimeRegion region)
+    {
+    	this.region = region;
+    }
+    
     // public void setStartDate(String startDate)
     // {
     // 	this.startDate = startDate;
@@ -60,10 +65,10 @@ public final class CampInformation
     // 	this.endDate = endDate;
     // }
     
-    // public void setRegCloseDate(String regCloseDate)
-    // {
-    // 	this.regCloseDate = regCloseDate;
-    // }
+    public void setRegCloseDate(LocalDate regCloseDate)
+    {
+    	this.regCloseDate = regCloseDate;
+    }
     
     public LocalDate getRegCloseDate()
     {
