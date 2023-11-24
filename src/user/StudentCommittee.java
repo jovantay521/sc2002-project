@@ -10,6 +10,9 @@ public class StudentCommittee extends Student {
      * Camp which the student is a committee member of.
      */
     protected Camp campIC;
+    /**
+     * Points attained
+     */
     private int points = 0;
 
     /**
@@ -41,5 +44,17 @@ public class StudentCommittee extends Student {
     public Camp getCamp() {
         return campIC;
     }
+
+    /**
+     * Increase point by 1
+     */
     public void addPoint() { points++; }
+
+    /**
+     * Get total no. of points.
+     * @return Number of points.
+     */
+    public int getPoints() {
+        return points;
+    }
 }

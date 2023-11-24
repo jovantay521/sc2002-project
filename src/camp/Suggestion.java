@@ -1,8 +1,6 @@
 package camp;
 
-import java.io.Serializable;
-
-public final class Suggestion implements Serializable {
+public final class Suggestion {
     private String text;
     private final String userID;
     public Suggestion(String text, String userID) {

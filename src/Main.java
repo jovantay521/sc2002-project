@@ -6,22 +6,22 @@ import utils.TimeRegion;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) {
-        UserController userController = UserController.loadFrom("data/users.bin").orElseGet(() -> {
+        UserController userController = UserController.loadFrom("data/users.csv").orElseGet(() -> {
             var tempController = new UserController();
             tempController.addStudents("data/student_list.csv");
             tempController.addStaff("data/staff_list.csv");
             return tempController;
         });
 
-        CampController campController = CampController.loadFrom("data/camps.bin").orElseGet(() -> {
-            var tempController = new CampController();
+        CampController campController = new CampController();
 
-            LocalDate sDate = LocalDate.of(2023, 12, 12);
-            LocalDate eDate = LocalDate.of(2023, 12, 15);
-            LocalDate rcDate = LocalDate.of(2023, 11, 30);
+        LocalDate sDate = LocalDate.of(2023, 12, 12);
+        LocalDate eDate = LocalDate.of(2023, 12, 15);
+        LocalDate rcDate = LocalDate.of(2023, 11, 30);
 
             tempController.createCamp((Staff) userController.verifyLogin("HUKUMAR", "password"), "Picnic Camp", new TimeRegion(sDate, eDate), rcDate, "NTU", "NorthSpine", 3, 2, "Holiday Camp 2023");
             return tempController;
@@ -38,8 +38,8 @@ public class Main {
 
         System.out.println("Saving...");
 
-        UserController.saveTo("data/users.bin", userController);
-        CampController.saveTo("data/camps.bin", campController);
+        UserController.saveTo("data/users.csv", userController);
+        // CampController.saveTo("data/camps.bin", campController);
 
         System.out.println("Exiting...");
     }

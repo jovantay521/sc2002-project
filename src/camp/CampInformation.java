@@ -1,6 +1,5 @@
 package camp;
 
-import java.io.Serializable;
 import java.lang.reflect.Modifier;
 import java.time.LocalDate;
 import java.util.*;
@@ -9,7 +8,7 @@ import user.Staff;
 import utils.TimeRegion;
 
 
-public final class CampInformation implements Serializable
+public final class CampInformation
 {
 	private static final int MAX_COMMITTEE_SLOTS = 10;
     private String campName;
@@ -145,5 +144,9 @@ public final class CampInformation implements Serializable
             }
         }
         return pairs;
+    }
+
+    public String getRepresentation() {
+        return String.join(",", campName, region.getRepresentation(), regCloseDate.toString(), userGroup, location, String.valueOf(totalSlots), String.valueOf(campCommitteeSlots), description);
     }
 }

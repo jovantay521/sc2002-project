@@ -1,5 +1,8 @@
 package camp;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +17,7 @@ import user.StudentCommittee;
 import user.User;
 import utils.TimeRegion;
 
-public class Camp implements Serializable
+public class Camp
 {
     private final Staff staff;
     // Student and StudentCommittee IDs
@@ -212,5 +215,18 @@ public class Camp implements Serializable
 
     public TimeRegion getRegion() {
         return campInfo.getTimeRegion();
+    }
+
+    public static<T> String getGenericRepresentation(List<T> items) {
+        return String.join(",", items.toArray(new CharSequence[items.size()]));
+    }
+    public String getRepresentation() {
+        return String.join(",", staff.getUserID(), campInfo.getRepresentation(), "A", getGenericRepresentation(attendees), "C", getGenericRepresentation(committees), "S", getGenericRepresentation(suggestions), "E", getGenericRepresentation(enquiries), String.valueOf(visible));
+    }
+    public List<String> getCommittees() {
+        return committees;
+    }
+    public void generateAttendance(String filePath) {
+        // TODO
     }
 }
