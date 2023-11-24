@@ -139,16 +139,21 @@ public class Camp
     }
     
     // Checks if the user is a staff or the camp is set to visible.
-    boolean isVisible(User user)
-    {
+    boolean isVisible(User user) {
         return user instanceof Staff || (visible && (campInfo.getUserGroup().equals("NTU") || isInUserGroup(user.getFaculty())));
     }
-    
     boolean isInCharge(Staff staff)
     { 
     	return this.staff == staff; 
     }
-
+    public boolean getVisibility() {
+        return visible;
+    }
+    public boolean toggleVisibility() {
+        boolean ret = visible;
+        visible = !visible;
+        return ret;
+    }
     @Override
     public String toString() 
     {

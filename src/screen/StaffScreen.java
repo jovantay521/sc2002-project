@@ -35,6 +35,7 @@ public class StaffScreen extends Screen {
         System.out.println("0: Create camp.");
         System.out.println("1: Edit camp.");
         System.out.println("2: Delete camp.");
+        System.out.println("3: Toggle visibility camp.");
         System.out.println("5: Enter camp submenu (To view members, change details etc.).");
         System.out.println("6: Select filters to camps.");
         System.out.println("7: Logout.");
@@ -260,6 +261,22 @@ public class StaffScreen extends Screen {
                     System.out.println("Select a camp: ");
                     var selectedCamp = select(camps);
                     campController.deleteCamp(selectedCamp, userController);
+                } catch (ScreenException e) {
+                    System.out.println(e.getMessage());
+                }
+                yield this;
+            }
+            case 3 -> {
+                try {
+                    System.out.println("Select a camp: ");
+                    {
+                        int i = 0;
+                        for (var camp: camps) {
+                            System.out.println(i + ": " + camp + " currently " + (camp.getVisibility() ? "visible" : "not visible"));
+                        }
+                    }
+                    var camp = select(camps);
+                    camp.toggleVisibility();
                 } catch (ScreenException e) {
                     System.out.println(e.getMessage());
                 }
