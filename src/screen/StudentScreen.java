@@ -40,7 +40,7 @@ public class StudentScreen extends Screen {
                     System.out.println("Select a camp: ");
                     var selectedCamp = select(camps);
                     selectedCamp.addStudent(student);
-                    //System.out.println("Registered student to " + selectedCamp + " as attendee.");
+                    System.out.println("Registered student to " + selectedCamp + " as attendee.");
                 } catch (ScreenException | CampControllerException e) {
                     System.out.println(e.getMessage());
                 }
@@ -52,6 +52,7 @@ public class StudentScreen extends Screen {
                     var selectedCamp = select(camps);
                     selectedCamp.addStudentCommittee(student);
                     var committeeMember = userController.convertTo(student, selectedCamp);
+                    System.out.println("Registered student to " + selectedCamp + " as camp committee member.");
                     yield new StudentCommitteeScreen(userController, campController, committeeMember);
                 } catch (ScreenException | CampControllerException e) {
                     System.out.println(e.getMessage());

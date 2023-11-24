@@ -47,24 +47,12 @@ public class Camp
         return campInfo.getPairs();
     }
 
-    boolean isFullAttendee()
-    {
-    	if(attendees.size() == campInfo.getTotalSlots())
-    	{
-    		return true;
-    	}
-    	else
-    		return false;
+    boolean isFullAttendee() {
+        return attendees.size() == campInfo.getTotalSlots();
     }
     
-    public boolean isFullCommittee()
-    {
-    	if(committees.size() == campInfo.getCampCommitteeSlots())
-    	{
-    		return true;
-    	}
-    	else
-    		return false;
+    public boolean isFullCommittee() {
+        return committees.size() == campInfo.getCampCommitteeSlots();
     }
     
     protected void doStudentChecks(Student student) throws CampControllerException {
@@ -77,60 +65,30 @@ public class Camp
         if (!student.checkTimeConflicts(this)) {
             throw new CampControllerException("Student cannot join this camp due to conflicts in time.");
         }
+        if (leftAttendees.stream().anyMatch(s -> s.equals(student.getUserID()))) {
+            throw new CampControllerException("You are not allowed to join " + campInfo.getCampName() + " as you have left previously.");
+        }
+        if (isFullAttendee()) {
+            throw new CampControllerException("This camp is full! Please join another camp.");
+        }
     }
     
     public void addStudent(Student student) throws CampControllerException {
-        // TODO: Check for full slots.
-        // if camp.isFullAttendee()
-    	boolean left = false;
-    	
-    	for(int i=0; i<leftAttendees.size(); i++)
-    	{
-    		if(leftAttendees.get(i).equals(student.getUserID()))
-    		{
-    			left = true;
-    			break;
-    		}		
-    	}
-    	if(left == false)
-    	{
-    		if(isFullAttendee())
-        	{
-        		System.out.println("This camp is full! Please join another camp.");
-        	}
-        	else
-        	{
-        		doStudentChecks(student);
-                attendees.add(student.getUserID());
-                student.joinCamp(this);
-                System.out.println("Registered student to " + campInfo.getCampName() + " as attendee.");
-        	}
-    	}
-    	else
-    	{
-    		System.out.println("You are not allowed to join " + campInfo.getCampName() + " as you have left previously.");
-    	}
+        doStudentChecks(student);
+        attendees.add(student.getUserID());
+        student.joinCamp(this);
     }
 
     public void addStudentCommittee(Student student) throws CampControllerException {
-        // TODO: Check for full slots.
-        // if camp.isFullCommittee()
-    	
         if (student instanceof StudentCommittee) {
             throw new CampControllerException("Student is already a student committee!");
         }
-        
-        if(isFullCommittee())
-        {
-        	System.out.println("Camp committee is full!");
+        if (isFullCommittee()) {
+            throw new CampControllerException("Camp committee is full!");
         }
-        else
-        {
-        	doStudentChecks(student);
-            committees.add(student.getUserID());
-            student.joinCamp(this);
-            System.out.println("Registered student to " + campInfo.getCampName() + " as camp committee member.");
-        }
+        doStudentChecks(student);
+        committees.add(student.getUserID());
+        student.joinCamp(this);
     }
     
     public void removeStudent(Student student) throws CampControllerException {
@@ -192,20 +150,11 @@ public class Camp
     		System.out.println(i+1 + ". " + attendees.get(i));
     	}
     }
-    
-    public void getCommittees()
-    {
-    	for(int i=0; i<committees.size(); i++)
-    	{
-    		System.out.println(i+1 + ". " + committees.get(i));
-    	}
-    }
-    
+
     @Override
     public String toString() 
     {
-        return campInfo.getCampName(); // for debugging
-        // return "{\nCamp Name:" + campInfo.getCampName() + "\nStart Date: " + campInfo.getStartDate() + "\nEnd Date: " + campInfo.getEndDate() + "\nRegistration Closing Date: " + campInfo.getRegCloseDate() + "\nUser Group: " + campInfo.getUserGroup() + "\nLocation: " + campInfo.getLocation() + "\nTotal Slots: " + campInfo.getTotalSlots() +"\nCamp Commitee Slots: " + campInfo.getCampCommitteeSlots() + "\nCamp Description: " + campInfo.getDescription() + "\nCamp In-Charge: " + campInfo.getInCharge() + "\n}";
+        return campInfo.getCampName();
     }
 
     // Checks if this method is access after closing registration date.
@@ -217,12 +166,6 @@ public class Camp
         return campInfo.getTimeRegion();
     }
 
-    public static<T> String getGenericRepresentation(List<T> items) {
-        return String.join(",", items.toArray(new CharSequence[items.size()]));
-    }
-    public String getRepresentation() {
-        return String.join(",", staff.getUserID(), campInfo.getRepresentation(), "A", getGenericRepresentation(attendees), "C", getGenericRepresentation(committees), "S", getGenericRepresentation(suggestions), "E", getGenericRepresentation(enquiries), String.valueOf(visible));
-    }
     public List<String> getCommittees() {
         return committees;
     }

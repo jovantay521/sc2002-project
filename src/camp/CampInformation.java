@@ -145,8 +145,4 @@ public final class CampInformation
         }
         return pairs;
     }
-
-    public String getRepresentation() {
-        return String.join(",", campName, region.getRepresentation(), regCloseDate.toString(), userGroup, location, String.valueOf(totalSlots), String.valueOf(campCommitteeSlots), description);
-    }
 }
