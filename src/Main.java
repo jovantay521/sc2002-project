@@ -1,4 +1,5 @@
 import camp.CampController;
+import camp.Enquiry;
 import screen.Screen;
 import screen.UserLoginScreen;
 import user.*;
@@ -23,10 +24,9 @@ public class Main {
         LocalDate eDate = LocalDate.of(2023, 12, 15);
         LocalDate rcDate = LocalDate.of(2023, 11, 30);
 
-        campController.createCamp((Staff) userController.verifyLogin("HUKUMAR", "password"), "Picnic Camp", new TimeRegion(sDate, eDate), rcDate, "NTU", "NorthSpine", 3, 2, "Holiday Camp 2023");
+        var camp = campController.createCamp((Staff) userController.verifyLogin("HUKUMAR", "password"), "Picnic Camp", new TimeRegion(sDate, eDate), rcDate, "NTU", "NorthSpine", 3, 2, "Holiday Camp 2023");
 
-        //userController.addStudents("C:/Users/cherm/OneDrive/Documents/NTU Year 2/SC2002 Object Oriented Design & Programming/Assignment/SC2002-Assignment-Cams/data/student_list.csv/");
-        //userController.addStaff("C:/Users/cherm/OneDrive/Documents/NTU Year 2/SC2002 Object Oriented Design & Programming/Assignment/SC2002-Assignment-Cams/data/staff_list.csv/");
+        camp.addEnquiries((Student) userController.verifyLogin("DON84", "password"), new Enquiry("J", "DON84"));
 
         Screen screen = new UserLoginScreen(userController, campController);
 

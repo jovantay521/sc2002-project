@@ -54,6 +54,7 @@ public class StudentCommitteeScreen extends Screen {
         return switch (choice) {
             case 0 -> {
                 try {
+                    System.out.println("Select a camp: ");
                     var selectedCamp = select(camps);
                     selectedCamp.addStudent(studentCommittee);
                     System.out.println("Joined camp! " + selectedCamp);
@@ -64,6 +65,7 @@ public class StudentCommitteeScreen extends Screen {
             }
             case 1 -> {
                 try {
+                    System.out.println("Select a camp: ");
                     var selectedCamp = select(camps);
                     var suggestion = scanner.nextLine();
                     selectedCamp.addSuggestion(studentCommittee, new Suggestion(suggestion, studentCommittee.getUserID()));
@@ -74,6 +76,7 @@ public class StudentCommitteeScreen extends Screen {
             }
             case 2 -> {
                 try {
+                    System.out.println("Select a camp: ");
                     var selectedCamp = select(camps);
                     yield new StudentCommitteeEnquiryScreen(userController, campController, studentCommittee, selectedCamp);
                 } catch (ScreenException e) {
@@ -83,6 +86,7 @@ public class StudentCommitteeScreen extends Screen {
             }
             case 3 -> {
                 try {
+                    System.out.println("Select a camp: ");
                     var selectedCamp = select(camps);
                     yield new StudentCommitteeSuggestionScreen(userController, campController, studentCommittee, selectedCamp);
                 } catch (ScreenException e) {
