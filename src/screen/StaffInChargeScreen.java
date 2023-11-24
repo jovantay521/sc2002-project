@@ -2,6 +2,8 @@ package screen;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner; //Test
+
 
 import camp.Camp;
 import camp.CampController;
@@ -73,6 +75,43 @@ public class StaffInChargeScreen extends StaffScreen {
                     System.out.println(e.getMessage());
                 }
                 yield this;
+            }
+            case 3 -> {
+            	try {
+            		Scanner input = new Scanner(System.in);
+            		int reportChoice, formatChoice;
+            		System.out.println("Select a camp: ");
+            		var selectedCamp = select(camps);
+            		do
+            		{
+            			System.out.println("Select what you want to include in the report: ");
+            			System.out.println("1: Both Camp Attendees and Camp Committees");
+                		System.out.println("2: Camp Attendees");
+                		System.out.println("3: Camp Committees");	
+                        reportChoice = input.nextInt();
+            		}while(reportChoice < 1 || reportChoice > 3);
+                    do
+                    {
+                    	System.out.println("Select report format: ");
+                    	System.out.println("1: Text File");
+                		System.out.println("2: CSV File");
+                		formatChoice = input.nextInt();
+                    }while(formatChoice < 1 || formatChoice > 2);
+                    switch(formatChoice)
+                    {
+                    	case 1:
+                    		selectedCamp.generateAttendance("C:\\Users\\cherm\\OneDrive\\Documents\\NTU Year 2\\SC2002 Object Oriented Design & Programming\\SC2002-Assignment-Cams-1\\data\\Staff_Report.txt", reportChoice);
+                    		break;
+                    	case 2:
+                    		selectedCamp.generateAttendance("C:\\Users\\cherm\\OneDrive\\Documents\\NTU Year 2\\SC2002 Object Oriented Design & Programming\\SC2002-Assignment-Cams-1\\data\\Staff_Report.csv", reportChoice);
+                    		break;
+                    }
+                    
+                    System.out.println("Report saved to directory.");
+            	} catch (ScreenException e) {
+            		System.out.println("Error Generating Report!");
+            	}
+            	yield this;
             }
             case 4 -> {
                 try {

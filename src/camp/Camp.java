@@ -175,8 +175,78 @@ public class Camp
     public List<String> getCommittees() {
         return committees;
     }
-    public void generateAttendance(String filePath) {
+    
+    /*public List<User> getCampAttendees() {
+    	try
+    	{
+    		return userController.getUsers(attendees);
+    	}
+    	catch(Exception e)
+    	{
+    		return null;
+    	}
+    	
+    }*/
+    
+    public void generateAttendance(String filePath, int reportChoice) {
         // TODO
+    	 try (FileWriter writer = new FileWriter(filePath)) {
+             // Write header
+             writer.write("Camp Attendance Report\n");
+             writer.write("Date: " + LocalDate.now() + "\n");
+             writer.write("Camp Name: " + campInfo.getCampName() + "\n");
+             writer.write("Camp Duration: " + campInfo.getTimeRegion() +"\n");
+             writer.write("Registration Deadline: " + campInfo.getRegCloseDate() + "\n");
+             writer.write("Camp Faculty: " + campInfo.getUserGroup() + "\n");
+             writer.write("Location: " + campInfo.getLocation() + "\n");
+             writer.write("Camp Attendee Slots: " + campInfo.getTotalSlots() + "\n");
+             writer.write("Camp Committee Slots: " + campInfo.getCampCommitteeSlots() + "\n");
+             writer.write("Camp Description: " + campInfo.getInCharge() + "\n");
+             writer.write("\n");  // Add a blank line
+
+             // Write attendees
+             switch (reportChoice)
+             {
+             	case 1:
+             		List<String> campAttendees = getStudentNames();
+                    writer.write("Attendees:\n");
+                    for (int i = 0; i < campAttendees.size(); i++) {
+                    	for(int a = 0; a < attendees.size(); a++)
+                   	 	{	
+                    		if(campAttendees.get(i) == attendees.get(a))
+                   		 	{
+                   			 	writer.write((i + 1) + ". " + campAttendees.get(i) + ", Camp Attendee\n");
+                   			 	break;
+                   		 	} 
+                   	 	}
+                   	 	for(int b = 0; b < committees.size(); b++)
+                   	 	{
+                   	 		if(campAttendees.get(i) == committees.get(b))
+                   	 		{
+                   	 			writer.write((i + 1) + ". " + campAttendees.get(i) + ", Camp Committee\n");
+                   	 			break;
+                   	 		} 
+                   	 	}   
+                    }
+                    break;
+             	case 2:
+             		for(int a = 0; a < attendees.size(); a++)
+               	 	{
+             			writer.write((a + 1) + ". " + attendees.get(a) + ", Camp Attendee\n");
+               	 	}
+             		break;
+             	case 3:
+             		for(int b = 0; b < committees.size(); b++)
+               	 	{
+             			writer.write((b + 1) + ". " + committees.get(b) + ", Camp Committee\n");
+               	 	}
+             		break;
+             }
+             
+         } catch (IOException e) {
+             // Handle IOException, e.g., log the error or print a message
+             e.printStackTrace();
+         }
     }
     public String getName() {
         return campInfo.getCampName();
