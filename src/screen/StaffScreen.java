@@ -22,6 +22,10 @@ public class StaffScreen extends Screen {
         System.out.println("--------------------------");
         System.out.println("Logging in as " + staff.getName());
 
+        if(staff.toggleFirstLogin()) {
+            System.out.println("Please change your password! Thank you.");
+        }
+
         System.out.println("Camps: ");
         var camps = campController.getVisibleCamps(staff);
         displayContents(camps);

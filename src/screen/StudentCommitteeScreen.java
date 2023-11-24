@@ -20,6 +20,10 @@ public class StudentCommitteeScreen extends Screen {
         System.out.println("--------------------------");
         System.out.println("Logging in as " + studentCommittee.getName());
 
+        if(studentCommittee.toggleFirstLogin()) {
+            System.out.println("Please change your password! Thank you.");
+        }
+
         System.out.println("Camps: ");
         var camps = campController.getVisibleCamps(studentCommittee);
         {

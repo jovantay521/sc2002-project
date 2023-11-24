@@ -18,6 +18,10 @@ public class StudentScreen extends Screen {
         System.out.println("--------------------------");
         System.out.println("Logging in as " + student.getName());
 
+        if(student.toggleFirstLogin()) {
+            System.out.println("Please change your password! Thank you.");
+        }
+
         System.out.println("Camps: ");
         var camps = campController.getVisibleCamps(student);
         {

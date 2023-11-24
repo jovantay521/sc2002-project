@@ -48,12 +48,27 @@ public class UserController {
             var lines = bufferedReader.lines();
             lines.forEach(line -> {
                 var values = line.split(",");
-                if (values.length != 5) {
+                if (values.length != 6) {
                     throw new RuntimeException("Malformed input!");
                 }
                 switch (values[0]) {
-                    case "user.Student", "user.StudentCommittee" -> userController.users.add(new Student(values[1].trim(), values[2].trim(), values[3].trim(), values[4].trim()));
-                    case "user.Staff" -> userController.users.add(new Staff(values[1].trim(), values[2].trim(), values[3].trim(), values[4].trim()));
+                    case "user.Student", "user.StudentCommittee" -> {
+                        var student = new Student(values[1].trim(), values[2].trim(), values[3].trim(), values[4].trim());
+                        if (Boolean.parseBoolean(values[5].trim())) {
+                            student.enableFirstLogin();
+                        }
+                        userController.users.add(student);
+                    }
+
+                    case "user.Staff" -> {
+                        var staff = new Staff(values[1].trim(), values[2].trim(), values[3].trim(), values[4].trim());
+                        if (Boolean.parseBoolean(values[5].trim())) {
+                            staff.enableFirstLogin();
+                        }
+
+                        userController.users.add(staff);
+                    }
+
                     default -> throw new RuntimeException("Malformed type!");
                 }
             });
@@ -77,7 +92,9 @@ public class UserController {
                 if (values.length != 3) {
                     throw new RuntimeException("Text malformed, Length: " + values.length);
                 }
-                users.add(new Student(values[0], values[1].split("@")[0].trim(), "password", values[2].trim()));
+                var student = new Student(values[0], values[1].split("@")[0].trim(), "password", values[2].trim());
+                student.enableFirstLogin();
+                users.add(student);
             }
         } catch (IOException e) {
             System.out.println("Error: " + e);
@@ -97,8 +114,9 @@ public class UserController {
                 if (values.length != 3) {
                     throw new RuntimeException("Text malformed, Length: " + values.length);
                 }
-
-                users.add(new Staff(values[0], values[1].split("@")[0].trim(),"password", values[2].trim()));
+                var staff = new Staff(values[0], values[1].split("@")[0].trim(),"password", values[2].trim());
+                staff.enableFirstLogin();
+                users.add(staff);
             }
         } catch (IOException e) {
             System.out.println("Error: " + e);

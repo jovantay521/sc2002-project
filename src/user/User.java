@@ -33,6 +33,15 @@ public class User {
     protected Map<String, CampController.Filter> filters;
 
     /**
+     * First login flag.
+     */
+    protected boolean firstLogin;
+
+    public User(String name, String userID, String password, String faculty, boolean firstLogin) {
+        this(name, userID, password, faculty);
+        this.firstLogin = firstLogin;
+    }
+    /**
      * Constructor of user.
      * @param name Name of user.
      * @param userID Identification of user.
@@ -45,6 +54,7 @@ public class User {
         this.password = password;
         this.faculty = faculty;
         this.filters = new HashMap<>();
+        this.firstLogin = false;
     }
 
     /**
@@ -77,6 +87,16 @@ public class User {
      */
     public String getFaculty() {
         return faculty;
+    }
+
+    public void enableFirstLogin() {
+        this.firstLogin = true;
+    }
+
+    public boolean toggleFirstLogin() {
+        boolean ret = firstLogin;
+        firstLogin = false;
+        return ret;
     }
 
     public Map<String, CampController.Filter> getFilters() {
@@ -112,6 +132,6 @@ public class User {
      * @return String that represents the user in a csv.
      */
     public String representation() {
-        return String.join(",", getClass().getTypeName(), name, userID, password, faculty);
+        return String.join(",", getClass().getTypeName(), name, userID, password, faculty, String.valueOf(firstLogin));
     }
 }
