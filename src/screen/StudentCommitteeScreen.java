@@ -22,7 +22,13 @@ public class StudentCommitteeScreen extends Screen {
 
         System.out.println("Camps: ");
         var camps = campController.getVisibleCamps(studentCommittee);
-        displayContents(camps);
+        {
+            int count = 0;
+            for (var camp: camps) {
+                System.out.println(count + ": " + camp + " " + camp.getRemainding() + " slots left.");
+                count++;
+            }
+        }
 
         System.out.println();
         System.out.println("Options: ");

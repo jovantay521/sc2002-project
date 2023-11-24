@@ -172,4 +172,5 @@ public class Camp
         return campInfo.getLocation();
     }
 
+    public int getRemainding() { return campInfo.getTotalSlots() - attendees.size() - committees.size(); }
 }
