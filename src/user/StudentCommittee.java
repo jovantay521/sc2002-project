@@ -25,6 +25,10 @@ public class StudentCommittee extends Student {
         filters = student.getFilters();
     }
 
+    public Camp getCommitteeCamp() {
+        return campIC;
+    }
+
     /**
      * Constructor
      * @param name Name

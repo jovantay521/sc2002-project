@@ -12,7 +12,7 @@ public class Student extends User {
     /**
      * All attending camps, used for error checking.
      */
-    public List<Camp> attendingCamps; //Change to public to so I could use it to display the camp attending by the student on the screen
+    protected List<Camp> attendingCamps; //Change to public to so I could use it to display the camp attending by the student on the screen
 
     /**
      * Student Constructor
@@ -54,4 +54,7 @@ public class Student extends User {
     	attendingCamps.remove(camp); 
     }
 
+    public List<Camp> getAttendingCamps() {
+        return attendingCamps;
+    }
 }

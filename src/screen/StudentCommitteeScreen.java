@@ -18,7 +18,7 @@ public class StudentCommitteeScreen extends Screen {
     @Override
     public Screen display() {
         System.out.println("--------------------------");
-        System.out.println("Logging in as " + studentCommittee.getName());
+        System.out.println("Logging in as " + studentCommittee.getName() + " student committee of " + studentCommittee.getCommitteeCamp().getName());
 
         if(studentCommittee.toggleFirstLogin()) {
             System.out.println("Please change your password! Thank you.");
@@ -67,6 +67,7 @@ public class StudentCommitteeScreen extends Screen {
                 try {
                     System.out.println("Select a camp: ");
                     var selectedCamp = select(camps);
+                    System.out.println("Suggestion: ");
                     var suggestion = scanner.nextLine();
                     selectedCamp.addSuggestion(studentCommittee, new Suggestion(suggestion, studentCommittee.getUserID()));
                 } catch (ScreenException e) {

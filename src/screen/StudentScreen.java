@@ -105,9 +105,10 @@ public class StudentScreen extends Screen {
             }
             case 4 -> {
                 try {
-                	displayContents(student.attendingCamps);
+                    var attendingCamps = student.getAttendingCamps();
+                	displayContents(attendingCamps);
                     System.out.println("Select a camp: ");
-                    var selectedCamp = select(student.attendingCamps);
+                    var selectedCamp = select(attendingCamps);
                     System.out.println("Requested withdraw for " + selectedCamp);
                     selectedCamp.removeStudent(student);
                 } catch (ScreenException | CampControllerException e) {
