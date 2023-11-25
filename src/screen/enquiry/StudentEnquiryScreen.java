@@ -35,18 +35,20 @@ public class StudentEnquiryScreen extends StudentScreen {
         } catch (ScreenException e) {
             System.out.println(e.getMessage());
         }
-        
-        //enquiries.get(0).isAnswered();
-        
+
         return switch (choice) {
             case 0 -> {
                 try {
                     System.out.println("Select enquiry: ");
                     var enquiry = select(enquiries);
-                    System.out.println("Type new message to change.");
-                    var message = scanner.nextLine();
-                    enquiry.edit(message);
-                    System.out.println("Enquiry changed.");
+                    if (!enquiry.isAnswered()) {
+                        System.out.println("Type new message to change.");
+                        var message = scanner.nextLine();
+                        enquiry.edit(message);
+                        System.out.println("Enquiry changed.");
+                    } else {
+                        System.out.println("Enquiry is already answered.");
+                    }
                 } catch (ScreenException e) {
                     System.out.println(e.getMessage());
                 }

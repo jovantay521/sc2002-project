@@ -510,7 +510,7 @@ public class StaffScreen extends Screen {
                     printCamp(camps);
                     var selectedCamp = select(camps);
                     campController.deleteCamp(staff, selectedCamp, userController);
-                    //System.out.println("Deleted.");
+                    System.out.println("Camp deleted.");
                 } catch (ScreenException | CampControllerException e) {
                     System.out.println(e.getMessage());
                 }
