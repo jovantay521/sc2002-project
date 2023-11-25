@@ -99,10 +99,10 @@ public class StaffInChargeScreen extends StaffScreen {
                     switch(formatChoice)
                     {
                     	case 1:
-                    		selectedCamp.generateAttendance("C:\\Users\\cherm\\OneDrive\\Documents\\NTU Year 2\\SC2002 Object Oriented Design & Programming\\SC2002-Assignment-Cams-1\\data\\Staff_Report.txt", reportChoice);
+                    		selectedCamp.generateAttendance(userController, "data/Staff_Report" + selectedCamp.getName() + ".txt", reportChoice);
                     		break;
                     	case 2:
-                    		selectedCamp.generateAttendance("C:\\Users\\cherm\\OneDrive\\Documents\\NTU Year 2\\SC2002 Object Oriented Design & Programming\\SC2002-Assignment-Cams-1\\data\\Report.csv", reportChoice);
+                    		selectedCamp.generateAttendance(userController, "data/Staff_Report" + selectedCamp.getName() + ".csv", reportChoice);
                     		break;
                     }
                     
@@ -116,9 +116,32 @@ public class StaffInChargeScreen extends StaffScreen {
                 try {
                     System.out.println("Select a camp: ");
                     var selectedCamp = select(camps);
+
+                    String formatEnd = "";
+                    String delimiter = "";
+                    int formatChoice = 0;
+                    try {
+                        do {
+                            System.out.println("Select report format: ");
+                            System.out.println("1: Text File");
+                            System.out.println("2: CSV File");
+                            formatChoice = getInt();
+                        }while(formatChoice < 1 || formatChoice > 2);
+                    } catch (ScreenException e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                    if (formatChoice == 1) {
+                        formatEnd = ".txt";
+                        delimiter = " ";
+                    } else {
+                        formatEnd = ".csv";
+                        delimiter = ",";
+                    }
+
                     var committees = userController.getUsers(selectedCamp.getCommittees()).stream().map(u -> (StudentCommittee) u).toList();
-                    var path = "data/Performance_" + selectedCamp.getName() + ".csv";
-                    userController.generatePerformance(path, committees);
+                    var path = "data/Performance_" + selectedCamp.getName() + formatEnd;
+                    userController.generatePerformance(path, committees, delimiter);
                     System.out.println("Generated reported at " + path);
                 } catch (ScreenException e) {
                     System.out.println(e.getMessage());

@@ -174,10 +174,10 @@ public class UserController {
      * @param filePath File location to save at.
      * @param committees List of committees member to parse.
      */
-    public void generatePerformance(String filePath, List<StudentCommittee> committees) {
+    public void generatePerformance(String filePath, List<StudentCommittee> committees, String delimiter) {
         try (var bufferedWriter = new BufferedWriter(new FileWriter(filePath))) {
             for (var committee: committees) {
-                bufferedWriter.write(String.join(",", committee.getUserID(), String.valueOf(committee.getPoints())));
+                bufferedWriter.write(String.join(delimiter, committee.getUserID(), String.valueOf(committee.getPoints())));
                 bufferedWriter.newLine();
             }
         } catch (IOException e) {

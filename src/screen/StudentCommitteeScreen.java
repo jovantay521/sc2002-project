@@ -147,10 +147,10 @@ public class StudentCommitteeScreen extends Screen {
                     switch(formatChoice)
                     {
                     	case 1:
-                    		selectedCamp.generateAttendance("C:\\Users\\cherm\\OneDrive\\Documents\\NTU Year 2\\SC2002 Object Oriented Design & Programming\\SC2002-Assignment-Cams-1\\data\\Committee_Report.txt", reportChoice);
+                    		selectedCamp.generateAttendance(userController, "data/Committee_Report" + selectedCamp.getName() + ".txt", reportChoice);
                     		break;
                     	case 2:
-                    		selectedCamp.generateAttendance("C:\\Users\\cherm\\OneDrive\\Documents\\NTU Year 2\\SC2002 Object Oriented Design & Programming\\SC2002-Assignment-Cams-1\\data\\Committee_Report.csv", reportChoice);
+                    		selectedCamp.generateAttendance(userController, "data/Committee_Report" + selectedCamp.getName() +".csv", reportChoice);
                     		break;
                     }
                     

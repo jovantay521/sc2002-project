@@ -177,7 +177,7 @@ public class Camp
         return committees;
     }
     
-    public void generateAttendance(String filePath, int reportChoice) {
+    public void generateAttendance(UserController userController, String filePath, int reportChoice) {
         // TODO
     	 try (FileWriter writer = new FileWriter(filePath)) {
              // Write header
@@ -194,41 +194,38 @@ public class Camp
              writer.write("\n");  // Add a blank line
 
              // Write attendees
+             List<User> campAttendees = userController.getUsers(attendees);
+             List<User> campCommittees = userController.getUsers(committees);
+             int i = 0;
              switch (reportChoice)
              {
              	case 1:
-             		List<String> campAttendees = getStudentNames();
                     writer.write("Attendees:\n");
-                    for (int i = 0; i < campAttendees.size(); i++) {
-                    	for(int a = 0; a < attendees.size(); a++)
-                   	 	{	
-                    		if(campAttendees.get(i) == attendees.get(a))
-                   		 	{
-                   			 	writer.write((i + 1) + ". " + campAttendees.get(i) + ", Camp Attendee\n");
-                   			 	break;
-                   		 	} 
-                   	 	}
-                   	 	for(int b = 0; b < committees.size(); b++)
-                   	 	{
-                   	 		if(campAttendees.get(i) == committees.get(b))
-                   	 		{
-                   	 			writer.write((i + 1) + ". " + campAttendees.get(i) + ", Camp Committee\n");
-                   	 			break;
-                   	 		} 
-                   	 	}   
+                    i = 0;
+                    for(var attendee: campAttendees) {
+                        writer.write((i + 1) + ". " + attendee.getUserID() + ", " + attendee.getName() + ", Camp Attendee\n");
+                        i++;
+                    }
+                    writer.write("Committees:\n");
+                    i = 0;
+                    for (var committee: campCommittees) {
+                        writer.write((i + 1) + ". " + committee.getUserID() + ", " + committee.getName() + ", Camp Committee\n");
+                        i++;
                     }
                     break;
              	case 2:
-             		for(int a = 0; a < attendees.size(); a++)
-               	 	{
-             			writer.write((a + 1) + ". " + attendees.get(a) + ", Camp Attendee\n");
-               	 	}
+                    i = 0;
+                    for(var attendee: campAttendees) {
+                        writer.write((i + 1) + ". " + attendee.getUserID() + ", " + attendee.getName() + ", Camp Attendee\n");
+                        i++;
+                    }
              		break;
              	case 3:
-             		for(int b = 0; b < committees.size(); b++)
-               	 	{
-             			writer.write((b + 1) + ". " + committees.get(b) + ", Camp Committee\n");
-               	 	}
+                     i = 0;
+                     for (var committee: campCommittees) {
+                         writer.write((i + 1) + ". " + committee.getUserID() + ", " + committee.getName() + ", Camp Committee\n");
+                         i++;
+                     }
              		break;
              }
              
