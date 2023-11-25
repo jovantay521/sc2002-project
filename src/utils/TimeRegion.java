@@ -52,7 +52,7 @@ public class TimeRegion implements Serializable {
      * @return True if there is a conflict, false otherwise.
      */
     public boolean conflictsWith(TimeRegion region) {
-        return start.isBefore(region.end) && end.isAfter(region.start);
+        return (start.isBefore(region.end) || start.isEqual(region.end)) && (end.isAfter(region.start) || end.isEqual(region.start));
     }
 
     /**

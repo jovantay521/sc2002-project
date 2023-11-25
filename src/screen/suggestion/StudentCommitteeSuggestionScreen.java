@@ -43,6 +43,7 @@ public class StudentCommitteeSuggestionScreen extends StudentCommitteeScreen {
                 System.out.println("Suggestion: ");
                 var suggestion = scanner.nextLine();
                 camp.addSuggestion(studentCommittee, new Suggestion(suggestion, studentCommittee.getUserID()));
+                studentCommittee.addPoint();
                 yield this;
             }
             case 1 -> {

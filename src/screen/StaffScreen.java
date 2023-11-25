@@ -11,6 +11,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class StaffScreen extends Screen {
@@ -280,10 +281,16 @@ public class StaffScreen extends Screen {
                 
                 try {
                     System.out.println("Select a camp: ");
-                    printCamp(camps);
-                    var selectedCamp = select(camps);
+					var ICCamps = campController.getInChargeCamps(staff);
+					if (!ICCamps.isEmpty())
+                    	printCamp(ICCamps);
+					else {
+						throw new ScreenException("No camps to edit!");
+					}
+
+                    var selectedCamp = select(ICCamps);
                     
-                    if(selectedCamp.getInCharge() == staff.getName()) {
+                    if(Objects.equals(selectedCamp.getInCharge(), staff.getName())) {
 	                    TimeRegion campRegion = selectedCamp.getRegion();
 	                    startDate = campRegion.getStartTime();
 	                    

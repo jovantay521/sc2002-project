@@ -80,17 +80,8 @@ public class StudentCommitteeScreen extends Screen {
                 }
                 yield this;
             }
-            case 2 -> {
-                try {
-                    System.out.println("Select a camp: ");
-                    printCamp(camps);
-                    var selectedCamp = select(camps);
-                    yield new StudentCommitteeEnquiryScreen(userController, campController, studentCommittee, selectedCamp);
-                } catch (ScreenException e) {
-                    System.out.println(e.getMessage());
-                }
-                yield this;
-            }
+            case 2 ->
+                    new StudentCommitteeEnquiryScreen(userController, campController, studentCommittee, studentCommittee.getCommitteeCamp());
             case 3 -> {
                 try {
                     System.out.println("Select a camp: ");
@@ -105,8 +96,9 @@ public class StudentCommitteeScreen extends Screen {
             case 4 -> {
                 try {
                     System.out.println("Select a camp: ");
-                    printCamp(camps);
-                    var selectedCamp = select(camps);
+                    var attendeeCamps = camps.stream().filter(c -> c != studentCommittee.getCommitteeCamp()).toList();
+                    printCamp(attendeeCamps);
+                    var selectedCamp = select(attendeeCamps);
                     System.out.println("Requested withdraw for " + selectedCamp);
                     selectedCamp.removeStudent(studentCommittee);
                 } catch (ScreenException | CampControllerException e) {
@@ -124,21 +116,15 @@ public class StudentCommitteeScreen extends Screen {
                 yield this;
             }
             case 6 -> {
-            	
             	boolean isCommMem = false;
             	try {
-            		Scanner input = new Scanner(System.in);
             		int reportChoice, formatChoice;
-            		System.out.println("Select a camp: ");
-            		printCamp(camps);
-            		var selectedCamp = select(camps);           		
+            		var selectedCamp = studentCommittee.getCommitteeCamp();
             		for(int i = 0; i < selectedCamp.getCommittees().size(); i++)
             		{
             			if(selectedCamp.getCommittees().get(i) == studentCommittee.getUserID())
             			{
-            				
             				isCommMem = true;
-   
             			}		
             		}
             		if(isCommMem)
@@ -149,14 +135,14 @@ public class StudentCommitteeScreen extends Screen {
             			System.out.println("1: Both Camp Attendees and Camp Committees");
                 		System.out.println("2: Camp Attendees");
                 		System.out.println("3: Camp Committees");	
-                        reportChoice = input.nextInt();
+                        reportChoice = getInt();
             		}while(reportChoice < 1 || reportChoice > 3);
                     do
                     {
                     	System.out.println("Select report format: ");
                     	System.out.println("1: Text File");
                 		System.out.println("2: CSV File");
-                		formatChoice = input.nextInt();
+                		formatChoice = getInt();
                     }while(formatChoice < 1 || formatChoice > 2);
                     switch(formatChoice)
                     {

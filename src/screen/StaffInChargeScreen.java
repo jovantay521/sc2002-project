@@ -35,7 +35,6 @@ public class StaffInChargeScreen extends StaffScreen {
         System.out.println("2: View suggestions: ");
         System.out.println("3: Generate attendance report: ");
         System.out.println("4: Generate performance report: ");
-        //System.out.println("5: Edit camp: ");
         System.out.println("9: Back.");
 
         int choice = -1;
@@ -79,7 +78,6 @@ public class StaffInChargeScreen extends StaffScreen {
             }
             case 3 -> {
             	try {
-            		Scanner input = new Scanner(System.in);
             		int reportChoice, formatChoice;
             		System.out.println("Select a camp: ");
             		var selectedCamp = select(camps);
@@ -89,14 +87,14 @@ public class StaffInChargeScreen extends StaffScreen {
             			System.out.println("1: Both Camp Attendees and Camp Committees");
                 		System.out.println("2: Camp Attendees");
                 		System.out.println("3: Camp Committees");	
-                        reportChoice = input.nextInt();
+                        reportChoice = getInt();
             		}while(reportChoice < 1 || reportChoice > 3);
                     do
                     {
                     	System.out.println("Select report format: ");
                     	System.out.println("1: Text File");
                 		System.out.println("2: CSV File");
-                		formatChoice = input.nextInt();
+                		formatChoice = getInt();
                     }while(formatChoice < 1 || formatChoice > 2);
                     switch(formatChoice)
                     {
@@ -119,14 +117,12 @@ public class StaffInChargeScreen extends StaffScreen {
                     System.out.println("Select a camp: ");
                     var selectedCamp = select(camps);
                     var committees = userController.getUsers(selectedCamp.getCommittees()).stream().map(u -> (StudentCommittee) u).toList();
-                    System.out.println(committees.size());
-                    System.out.println("Where to save it.");
-                    var path = scanner.nextLine();
+                    var path = "data/Performance_" + selectedCamp.getName() + ".csv";
                     userController.generatePerformance(path, committees);
+                    System.out.println("Generated reported at " + path);
                 } catch (ScreenException e) {
-
+                    System.out.println(e.getMessage());
                 }
-
                 yield this;
             }
 //            case 5 -> {

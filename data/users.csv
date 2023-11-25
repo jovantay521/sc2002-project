@@ -4,7 +4,7 @@ user.Student,BRANDON,BR015,password,EEE,true
 user.Student,CALVIN,CT113,password,SCSE,false
 user.Student,CHAN,YCN019,password,NBS,true
 user.Student,DENISE,DL007,password,SCSE,true
-user.Student,DONG,DON84,password,ADM,true
+user.Student,DONG,DON84,password,ADM,false
 user.Student,ERNEST,ELI34,password,EEE,true
 user.Student,LEE,LE51,password,SCSE,true
 user.Student,RAWAL,AKY013,password,SSS,true
