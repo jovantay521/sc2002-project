@@ -2,6 +2,9 @@ package user;
 
 import camp.Camp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * StudentCommittee, a student which has joined a camp as a committee member, hence a subclass of student.
  */
@@ -61,5 +64,11 @@ public class StudentCommittee extends Student {
      */
     public int getPoints() {
         return points;
+    }
+
+    public List<Camp> getAllCamps() {
+        var camps = new ArrayList<>(attendingCamps);
+        camps.add(campIC);
+        return camps;
     }
 }

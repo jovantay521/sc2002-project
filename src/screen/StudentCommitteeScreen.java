@@ -43,6 +43,7 @@ public class StudentCommitteeScreen extends Screen {
 
         System.out.println();
         System.out.println("Options: ");
+        System.out.println("-1: View registered camps (excluding committee camp).");
         System.out.println("0: View camps");
         System.out.println("1: Register as StudentAttendee.");
         System.out.println("2: View all enquiries.");
@@ -56,7 +57,7 @@ public class StudentCommitteeScreen extends Screen {
         System.out.println("10: Quit.");
 
 
-        int choice = -1;
+        int choice = -2;
         try {
             choice = getInt();
         } catch (ScreenException e) {
@@ -64,6 +65,10 @@ public class StudentCommitteeScreen extends Screen {
         }
 
         return switch (choice) {
+            case -1 -> {
+                printCamp(studentCommittee.getAttendingCamps());
+                yield this;
+            }
             case 0 -> {
                 printCamp(camps);
                 yield this;
