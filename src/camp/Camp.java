@@ -50,7 +50,7 @@ public class Camp
     }
 
     boolean isFullAttendee() {
-        return attendees.size() == campInfo.getTotalSlots() - campInfo.getCampCommitteeSlots();
+        return attendees.size() == campInfo.getTotalSlots();
     }
     
     public boolean isFullCommittee() {
@@ -290,7 +290,7 @@ public class Camp
     {
     	campInfo.setUserGroup(userGrp);
     }
-    
-    // public int getRemainding() { return campInfo.getTotalSlots() - attendees.size() - committees.size(); }
+    public int getRemaindingCommittee() { return Math.min(campInfo.getTotalSlots() - committees.size(), getRemainding()); }
+
     public int getRemainding() { return campInfo.getTotalSlots() - attendees.size(); }  // attendees should include committee members already
 }

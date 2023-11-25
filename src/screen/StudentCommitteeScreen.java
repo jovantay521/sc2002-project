@@ -24,7 +24,7 @@ public class StudentCommitteeScreen extends Screen {
         {
             int count = 0;
             for (var camp : camps) {
-                System.out.println(count + ": " + camp + " " + camp.getRemainding() + " slots left.");
+                System.out.println(count + ": " + camp + " " + camp.getRemainding() + " total slots left " + camp.getRemaindingCommittee() + " committee slots left.");
                 count++;
             }
         }
