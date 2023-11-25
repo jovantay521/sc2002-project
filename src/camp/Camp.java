@@ -50,7 +50,7 @@ public class Camp
     }
 
     boolean isFullAttendee() {
-        return attendees.size() == campInfo.getTotalSlots();
+        return attendees.size() == campInfo.getTotalSlots() - campInfo.getCampCommitteeSlots();
     }
     
     public boolean isFullCommittee() {
@@ -178,18 +178,6 @@ public class Camp
         return committees;
     }
     
-    /*public List<User> getCampAttendees() {
-    	try
-    	{
-    		return userController.getUsers(attendees);
-    	}
-    	catch(Exception e)
-    	{
-    		return null;
-    	}
-    	
-    }*/
-    
     public void generateAttendance(String filePath, int reportChoice) {
         // TODO
     	 try (FileWriter writer = new FileWriter(filePath)) {
@@ -259,6 +247,10 @@ public class Camp
         return campInfo.getLocation();
     }
     
+    public String getInCharge()
+    {
+    	return campInfo.getInCharge();
+    }
     public void setCampCommSlots(int slots)
     {
     	campInfo.setCampCommitteeSlots(slots);

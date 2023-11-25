@@ -35,7 +35,9 @@ public class StudentEnquiryScreen extends StudentScreen {
         } catch (ScreenException e) {
             System.out.println(e.getMessage());
         }
-
+        
+        //enquiries.get(0).isAnswered();
+        
         return switch (choice) {
             case 0 -> {
                 try {

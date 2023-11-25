@@ -35,6 +35,7 @@ public class StaffInChargeScreen extends StaffScreen {
         System.out.println("2: View suggestions: ");
         System.out.println("3: Generate attendance report: ");
         System.out.println("4: Generate performance report: ");
+        //System.out.println("5: Edit camp: ");
         System.out.println("9: Back.");
 
         int choice = -1;
@@ -103,7 +104,7 @@ public class StaffInChargeScreen extends StaffScreen {
                     		selectedCamp.generateAttendance("C:\\Users\\cherm\\OneDrive\\Documents\\NTU Year 2\\SC2002 Object Oriented Design & Programming\\SC2002-Assignment-Cams-1\\data\\Staff_Report.txt", reportChoice);
                     		break;
                     	case 2:
-                    		selectedCamp.generateAttendance("C:\\Users\\cherm\\OneDrive\\Documents\\NTU Year 2\\SC2002 Object Oriented Design & Programming\\SC2002-Assignment-Cams-1\\data\\Staff_Report.csv", reportChoice);
+                    		selectedCamp.generateAttendance("C:\\Users\\cherm\\OneDrive\\Documents\\NTU Year 2\\SC2002 Object Oriented Design & Programming\\SC2002-Assignment-Cams-1\\data\\Report.csv", reportChoice);
                     		break;
                     }
                     
@@ -128,6 +129,17 @@ public class StaffInChargeScreen extends StaffScreen {
 
                 yield this;
             }
+//            case 5 -> {
+//            	System.out.println("Select a camp: ");
+//        		try {
+//					var selectedCamp = select(camps);
+//				} catch (ScreenException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//        		
+//        		yield this;
+//            }
             case 9 -> new StaffScreen(userController, campController, staff);
             default -> this;
         };

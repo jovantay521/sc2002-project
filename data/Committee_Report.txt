@@ -9,5 +9,5 @@ Camp Attendee Slots: 3
 Camp Committee Slots: 2
 Camp Description: Madhukumar
 
-1. SL22, Camp Committee
-2. BR015, Camp Committee
+Attendees:
+1. YCHERN, Camp Committee
