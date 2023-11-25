@@ -93,6 +93,7 @@ public class Camp
             throw new CampControllerException("Camp committee is full!");
         }
         doStudentChecks(student);
+        attendees.add(student.getUserID());
         committees.add(student.getUserID());
         student.joinCamp(this);
     }
@@ -135,6 +136,7 @@ public class Camp
         enquiries.removeIf(e -> e == enquiry);
     }
     public List<String> getStudentNames() {
+        // TODO: student names should just have attendees? maybe separate committees?
         return Stream.concat(attendees.stream(), committees.stream()).toList();
     }
     
@@ -297,5 +299,6 @@ public class Camp
     	campInfo.setUserGroup(userGrp);
     }
     
-    public int getRemainding() { return campInfo.getTotalSlots() - attendees.size() - committees.size(); }
+    // public int getRemainding() { return campInfo.getTotalSlots() - attendees.size() - committees.size(); }
+    public int getRemainding() { return campInfo.getTotalSlots() - attendees.size(); }  // attendees should include committee members already
 }
