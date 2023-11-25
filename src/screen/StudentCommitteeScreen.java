@@ -124,11 +124,25 @@ public class StudentCommitteeScreen extends Screen {
                 yield this;
             }
             case 6 -> {
+            	
+            	boolean isCommMem = false;
             	try {
             		Scanner input = new Scanner(System.in);
             		int reportChoice, formatChoice;
             		System.out.println("Select a camp: ");
-            		var selectedCamp = select(camps);
+            		printCamp(camps);
+            		var selectedCamp = select(camps);           		
+            		for(int i = 0; i < selectedCamp.getCommittees().size(); i++)
+            		{
+            			if(selectedCamp.getCommittees().get(i) == studentCommittee.getUserID())
+            			{
+            				
+            				isCommMem = true;
+   
+            			}		
+            		}
+            		if(isCommMem)
+            		{
             		do
             		{
             			System.out.println("Select what you want to include in the report: ");
@@ -155,6 +169,11 @@ public class StudentCommitteeScreen extends Screen {
                     }
                     
                     System.out.println("Report saved to directory.");
+            		}
+            		else
+            		{
+            			System.out.println("You are not allowed to generate a report");
+            		}
             	} catch (ScreenException e) {
             		System.out.println("Error Generating Report!");
             	}
