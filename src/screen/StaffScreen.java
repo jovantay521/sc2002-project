@@ -200,8 +200,8 @@ public class StaffScreen extends Screen {
                     {
                     	System.out.println("Error: Please do not leave location empty.");
                     }  
-                    System.out.println(location);
-                    System.out.println(validLoca);
+                    // System.out.println(location);
+                    // System.out.println(validLoca);
                 }while(!validLoca);
                 
                 
