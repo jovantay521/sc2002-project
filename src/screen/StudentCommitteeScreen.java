@@ -3,14 +3,12 @@ package screen;
 import camp.Camp;
 import camp.CampController;
 import camp.CampControllerException;
-import camp.Suggestion;
 import screen.enquiry.StudentCommitteeEnquiryScreen;
 import screen.suggestion.StudentCommitteeSuggestionScreen;
 import user.StudentCommittee;
 import user.UserController;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class StudentCommitteeScreen extends Screen {
     protected StudentCommittee studentCommittee;
@@ -51,10 +49,11 @@ public class StudentCommitteeScreen extends Screen {
         System.out.println("4. Leave attendee camps.");
         System.out.println("5: View details of committee camp.");
         System.out.println("6: Generate attendance report.");
-        System.out.println("7: Select filters to camps.");
-        System.out.println("8: Logout.");
-        System.out.println("9: Change Password.");
-        System.out.println("10: Quit.");
+        System.out.println("7: Generate enquiry report.");
+        System.out.println("8: Select filters to camps.");
+        System.out.println("9: Logout.");
+        System.out.println("10: Change Password.");
+        System.out.println("11: Quit.");
 
 
         int choice = -2;
@@ -121,65 +120,69 @@ public class StudentCommitteeScreen extends Screen {
                 yield this;
             }
             case 6 -> {
-            	boolean isCommMem = false;
-            	try {
-            		int reportChoice, formatChoice;
-            		var selectedCamp = studentCommittee.getCommitteeCamp();
-            		for(int i = 0; i < selectedCamp.getCommittees().size(); i++)
-            		{
-            			if(selectedCamp.getCommittees().get(i) == studentCommittee.getUserID())
-            			{
-            				isCommMem = true;
-            			}		
-            		}
-            		if(isCommMem)
-            		{
-            		do
-            		{
-            			System.out.println("Select what you want to include in the report: ");
-            			System.out.println("1: Both Camp Attendees and Camp Committees");
-                		System.out.println("2: Camp Attendees");
-                		System.out.println("3: Camp Committees");	
-                        reportChoice = getInt();
-            		}while(reportChoice < 1 || reportChoice > 3);
-                    do
-                    {
-                    	System.out.println("Select report format: ");
-                    	System.out.println("1: Text File");
-                		System.out.println("2: CSV File");
-                		formatChoice = getInt();
-                    }while(formatChoice < 1 || formatChoice > 2);
-                    switch(formatChoice)
-                    {
-                    	case 1:
-                    		selectedCamp.generateAttendance(userController, "data/Committee_Report" + selectedCamp.getName() + ".txt", reportChoice);
-                    		break;
-                    	case 2:
-                    		selectedCamp.generateAttendance(userController, "data/Committee_Report" + selectedCamp.getName() +".csv", reportChoice);
-                    		break;
+                boolean isCommMem = false;
+                try {
+                    int reportChoice, formatChoice;
+                    var selectedCamp = studentCommittee.getCommitteeCamp();
+                    for (int i = 0; i < selectedCamp.getCommittees().size(); i++) {
+                        if (selectedCamp.getCommittees().get(i) == studentCommittee.getUserID()) {
+                            isCommMem = true;
+                        }
                     }
-                    
-                    System.out.println("Report saved to directory.");
-            		}
-            		else
-            		{
-            			System.out.println("You are not allowed to generate a report");
-            		}
-            	} catch (ScreenException e) {
-            		System.out.println("Error Generating Report!");
-            	}
-            	yield this;
+                    if (isCommMem) {
+                        do {
+                            System.out.println("Select what you want to include in the report: ");
+                            System.out.println("1: Both Camp Attendees and Camp Committees");
+                            System.out.println("2: Camp Attendees");
+                            System.out.println("3: Camp Committees");
+                            reportChoice = getInt();
+                        } while (reportChoice < 1 || reportChoice > 3);
+                        do {
+                            System.out.println("Select report format: ");
+                            System.out.println("1: Text File");
+                            System.out.println("2: CSV File");
+                            formatChoice = getInt();
+                        } while (formatChoice < 1 || formatChoice > 2);
+                        switch (formatChoice) {
+                            case 1:
+                                selectedCamp.generateAttendance(userController, "data/Committee_Report" + selectedCamp.getName() + ".txt", reportChoice);
+                                break;
+                            case 2:
+                                selectedCamp.generateAttendance(userController, "data/Committee_Report" + selectedCamp.getName() + ".csv", reportChoice);
+                                break;
+                        }
+
+                        System.out.println("Report saved to directory.");
+                    } else {
+                        System.out.println("You are not allowed to generate a report");
+                    }
+                } catch (ScreenException e) {
+                    System.out.println("Error Generating Report!");
+                }
+                yield this;
             }
             case 7 -> {
+                try {
+                    System.out.println("Select a camp: ");
+                    printCamp(camps);
+                    var selectedCamp = select(camps);
+                    selectedCamp.generateEnquiryReport("data/Committee_Enquiry_Report" + selectedCamp.getName() + ".csv");
+                    System.out.println("Generated enquiry report!");
+                } catch (ScreenException e) {
+                    System.out.println(e.getMessage());
+                }
+                yield this;
+            }
+            case 8 -> {
                 selectFilter(studentCommittee);
                 yield this;
             }
-            case 8 -> new UserLoginScreen(userController, campController);
-            case 9 -> {
+            case 9 -> new UserLoginScreen(userController, campController);
+            case 10 -> {
                 changePassword(studentCommittee);
                 yield this;
             }
-            case 10 -> null;
+            case 11 -> null;
             default -> this;
         };
     }

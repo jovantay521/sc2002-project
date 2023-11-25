@@ -1,9 +1,7 @@
 package camp;
 
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -234,7 +232,17 @@ public class Camp
              e.printStackTrace();
          }
     }
-    
+
+    public void generateEnquiryReport(String filePath) {
+        try (FileWriter fileWriter = new FileWriter(filePath)) {
+            for (var enquiry: enquiries) {
+                fileWriter.write( enquiry.getUserID() + ", " + enquiry.toString() + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String getName() {
         return campInfo.getCampName();
     }
