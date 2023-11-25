@@ -50,7 +50,7 @@ public class Camp
     }
 
     boolean isFullAttendee() {
-        return attendees.size() == campInfo.getTotalSlots();
+        return (attendees.size() + committees.size()) == campInfo.getTotalSlots();
     }
     
     public boolean isFullCommittee() {
@@ -93,7 +93,6 @@ public class Camp
             throw new CampControllerException("Camp committee is full!");
         }
         doStudentChecks(student);
-        attendees.add(student.getUserID());
         committees.add(student.getUserID());
         student.joinCamp(this);
     }
@@ -292,5 +291,5 @@ public class Camp
     }
     public int getRemaindingCommittee() { return Math.min(campInfo.getTotalSlots() - committees.size(), getRemainding()); }
 
-    public int getRemainding() { return campInfo.getTotalSlots() - attendees.size(); }  // attendees should include committee members already
+    public int getRemainding() { return campInfo.getTotalSlots() - attendees.size() - committees.size(); }  // attendees should include committee members already
 }
