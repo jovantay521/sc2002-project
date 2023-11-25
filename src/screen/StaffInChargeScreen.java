@@ -140,7 +140,7 @@ public class StaffInChargeScreen extends StaffScreen {
                     }
 
                     var committees = userController.getUsers(selectedCamp.getCommittees()).stream().map(u -> (StudentCommittee) u).toList();
-                    var path = "data/Performance_" + selectedCamp.getName() + formatEnd;
+                    var path = "data/Staff_Performance_" + selectedCamp.getName() + "_Report" + formatEnd;
                     userController.generatePerformance(path, committees, delimiter);
                     System.out.println("Generated reported at " + path);
                 } catch (ScreenException e) {

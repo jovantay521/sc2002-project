@@ -61,7 +61,7 @@ public class TimeRegion implements Serializable {
      * @return True if there is full coverage, false otherwise
      */
     public boolean fullyCover(TimeRegion region) {
-        return start.isBefore(region.start) && end.isAfter(region.end);
+        return (start.isEqual(start) || start.isBefore(region.start)) && (end.isEqual(end) || end.isAfter(region.end));
     }
 
     @Override

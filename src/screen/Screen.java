@@ -60,12 +60,12 @@ public abstract class Screen {
         user.changePassword(password);
     }
     protected static void selectFilter(User user) {
-        System.out.println("Currently in use filters.");
-        var filters = user.getFilters().keySet().stream().toList();
-
-        displayContents(filters);
-
         while (true) {
+            System.out.println("Currently in use filters.");
+            var filters = user.getFilters().keySet().stream().toList();
+
+            displayContents(filters);
+
             System.out.println();
             System.out.println("Options: ");
             System.out.println("0: Add Date filter");
