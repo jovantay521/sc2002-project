@@ -107,7 +107,7 @@ public class StudentCommitteeScreen extends Screen {
                     System.out.println("Select a camp: ");
                     printCamp(camps);
                     var selectedCamp = select(camps);
-                    System.out.println("Requested withdraw for" + selectedCamp);
+                    System.out.println("Requested withdraw for " + selectedCamp);
                     selectedCamp.removeStudent(studentCommittee);
                 } catch (ScreenException | CampControllerException e) {
                     System.out.println(e.getMessage());
