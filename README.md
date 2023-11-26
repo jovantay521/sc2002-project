@@ -16,4 +16,4 @@
 ``` javac Main.java```
 
 8.  Run
-``` javac Main.java ```
+``` java Main ```
