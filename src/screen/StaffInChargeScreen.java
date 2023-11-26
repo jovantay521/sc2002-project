@@ -46,6 +46,7 @@ public class StaffInChargeScreen extends StaffScreen {
         System.out.println("2: View suggestions: ");
         System.out.println("3: Generate attendance report: ");
         System.out.println("4: Generate performance report: ");
+        System.out.println("5: Generate enquiry report: ");
         System.out.println("9: Back.");
 
         int choice = -1;
@@ -159,17 +160,31 @@ public class StaffInChargeScreen extends StaffScreen {
                 }
                 yield this;
             }
-//            case 5 -> {
-//            	System.out.println("Select a camp: ");
-//        		try {
-//					var selectedCamp = select(camps);
-//				} catch (ScreenException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//        		
-//        		yield this;
-//            }
+            case 5 -> {
+                try {
+                    System.out.println("Select a camp: ");
+                    var selectedCamp = select(camps);
+                    int formatChoice = 0;
+                    do {
+                        System.out.println("Select report format: ");
+                        System.out.println("1: Text File");
+                        System.out.println("2: CSV File");
+                        formatChoice = getInt();
+                    } while (formatChoice < 1 || formatChoice > 2);
+                    switch (formatChoice) {
+                        case 1:
+                            selectedCamp.generateEnquiryReport("data/Staff_Enquiry_Report" + selectedCamp.getName() + ".txt");
+                            break;
+                        case 2:
+                            selectedCamp.generateEnquiryReport("data/Staff_Enquiry_Report" + selectedCamp.getName() + ".csv");
+                            break;
+                    }
+                    System.out.println("Generated enquiry report!");
+                } catch (ScreenException e) {
+                    System.out.println(e.getMessage());
+                }
+        		yield this;
+            }
             case 9 -> new StaffScreen(userController, campController, staff);
             default -> this;
         };
