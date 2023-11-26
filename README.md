@@ -10,10 +10,10 @@
 ``` cd src ```
 
 6.  Run 
-``` javac ./*.java' ```
+``` javac ./*.java ```
 
 7.  Run 
-``` javac Main.java```
+``` javac Main.java ```
 
 8.  Run
 ``` java Main ```
