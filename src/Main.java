@@ -20,13 +20,11 @@ public class Main {
 
         CampController campController = new CampController();
 
-        LocalDate sDate = LocalDate.of(2023, 12, 12);
-        LocalDate eDate = LocalDate.of(2023, 12, 15);
+        LocalDate sDate = LocalDate.of(2024, 1, 7);
+        LocalDate eDate = LocalDate.of(2024, 1, 9);
         LocalDate rcDate = LocalDate.of(2023, 11, 30);
 
-        var camp = campController.createCamp((Staff) userController.verifyLogin("HUKUMAR", "password"), "Picnic Camp", new TimeRegion(sDate, eDate), rcDate, "NTU", "NorthSpine", 3, 2, "Holiday Camp 2023");
-
-        camp.addEnquiries((Student) userController.verifyLogin("DON84", "password"), new Enquiry("J", "DON84"));
+        campController.createCamp((Staff) userController.verifyLogin("HUKUMAR", "password"), "Union Orientation Camp", new TimeRegion(sDate, eDate), rcDate, "NTU", "NorthSpine", 3, 2, "Orientation camp for NTU Freshman");
 
         Screen screen = new UserLoginScreen(userController, campController);
 
