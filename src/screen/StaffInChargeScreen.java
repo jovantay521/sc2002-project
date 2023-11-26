@@ -13,13 +13,24 @@ import user.Staff;
 import user.StudentCommittee;
 import user.User;
 import user.UserController;
-
+/**
+ * Screen for staff in charge
+ */
 public class StaffInChargeScreen extends StaffScreen {
-    public StaffInChargeScreen(UserController userController, CampController campController, Staff staff) {
+    /**
+     * Constructor
+     * @param userController user controller
+     * @param campController camp controller
+     * @param staff staff member
+     */
+	public StaffInChargeScreen(UserController userController, CampController campController, Staff staff) {
         super(userController, campController, staff);
     }
 
     @Override
+    /**
+	 * Display for staff in charge
+     */
     public Screen display() {
         System.out.println("--------------------------");
 

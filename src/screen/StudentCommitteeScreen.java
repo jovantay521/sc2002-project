@@ -9,14 +9,28 @@ import user.StudentCommittee;
 import user.UserController;
 
 import java.util.List;
-
+/**
+ * screen for student committee member
+ */
 public class StudentCommitteeScreen extends Screen {
-    protected StudentCommittee studentCommittee;
+    /**
+     * student committee member in charge
+     */
+	protected StudentCommittee studentCommittee;
+	/**
+	 * Constructor
+	 * @param userController user controller
+	 * @param campController camp controller
+	 * @param studentCommittee student committee member
+	 */
     public StudentCommitteeScreen(UserController userController, CampController campController, StudentCommittee studentCommittee) {
         super(userController, campController);
         this.studentCommittee = studentCommittee;
     }
-
+    /**
+     * print list of camps to screen
+     * @param camps list of camps
+     */
     private void printCamp(List< Camp > camps) {
         System.out.println("Camps: ");
         {
@@ -29,6 +43,9 @@ public class StudentCommitteeScreen extends Screen {
     }
 
     @Override
+    /**
+     * display screen for student committee member
+     */
     public Screen display() {
         System.out.println("--------------------------");
         System.out.println("Logging in as " + studentCommittee.getName() + " student committee of " + studentCommittee.getCommitteeCamp().getName());

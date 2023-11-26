@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"screen.suggestion","c":"StudentCommitteeSuggestionScreen","l":"display()"},{"p":"screen.suggestion","c":"StudentCommitteeSuggestionScreen","l":"StudentCommitteeSuggestionScreen(UserController, CampController, StudentCommittee, Camp)","u":"%3Cinit%3E(user.UserController,camp.CampController,user.StudentCommittee,camp.Camp)"}];updateSearchResults();

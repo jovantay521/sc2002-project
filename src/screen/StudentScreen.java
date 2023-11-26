@@ -10,13 +10,28 @@ import user.UserController;
 
 import java.util.InputMismatchException;
 import java.util.List;
-
+/**
+ * screen for student
+ */
 public class StudentScreen extends Screen {
-    protected Student student;
+    /**
+     * student
+     */
+	protected Student student;
+	/**
+	 * constructor for student
+	 * @param userController user controller
+	 * @param campController camp controller
+	 * @param student student
+	 */
     public StudentScreen(UserController userController, CampController campController, Student student) {
         super(userController, campController);
         this.student = student;
     }
+    /**
+     * print list of camps
+     * @param camps list of camps
+     */
     private void printCamps(List<Camp> camps) {
         System.out.println("Camps: ");
         {
@@ -27,6 +42,9 @@ public class StudentScreen extends Screen {
             }
         }
     }
+    /**
+     * display screen for student
+     */
     @Override
     public Screen display() {
         System.out.println("--------------------------");

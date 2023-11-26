@@ -8,14 +8,29 @@ import screen.StaffInChargeScreen;
 import screen.StaffScreen;
 import user.Staff;
 import user.UserController;
-
+/**
+ * StaffInCharge Enquiry Screen
+ */
 public class StaffInChargeEnquiryScreen extends StaffScreen {
-    protected Camp camp;
+    /**
+     * camp
+     */
+	protected Camp camp;
+	/**
+	 * Constructor for StaffInChargeEnquiryScreen
+	 * @param userController User Controller
+	 * @param campController Camp Controller
+	 * @param staff Staff
+	 * @param camp Camp
+	 */
     public StaffInChargeEnquiryScreen(UserController userController, CampController campController, Staff staff, Camp camp) {
         super(userController, campController, staff);
         this.camp = camp;
     }
-
+    
+    /**
+	 * display
+     */
     @Override
     public Screen display() {
         System.out.println("--------------------------");

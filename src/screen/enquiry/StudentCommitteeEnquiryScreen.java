@@ -7,15 +7,30 @@ import screen.ScreenException;
 import screen.StudentCommitteeScreen;
 import user.StudentCommittee;
 import user.UserController;
-
+/**
+ * Student Committee Enquiry Screen
+ */
 public class StudentCommitteeEnquiryScreen extends StudentCommitteeScreen {
-    protected Camp camp;
-    public StudentCommitteeEnquiryScreen(UserController userController, CampController campController, StudentCommittee studentCommittee, Camp camp) {
+    /**
+     * Camp
+     */
+	protected Camp camp;
+    /**
+     * Constructor for Student Committee Enquiry Screen 
+     * @param userController User Controller
+     * @param campController Camp Controller
+     * @param studentCommittee Student Committee
+     * @param camp Camp
+     */
+	public StudentCommitteeEnquiryScreen(UserController userController, CampController campController, StudentCommittee studentCommittee, Camp camp) {
         super(userController, campController, studentCommittee);
         this.camp = camp;
     }
 
     @Override
+    /**
+	 * Display
+     */
     public Screen display() {
         System.out.println("--------------------------");
         System.out.println("All enquiries for camp <" + camp + ">");

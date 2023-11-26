@@ -11,16 +11,43 @@ import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-
+/**
+ * Screen for users to interact with
+ */
 public abstract class Screen {
+	/**
+	 * User Controller
+	 */
     protected UserController userController;
+    /**
+     * Camp Controller
+     */
     protected CampController campController;
+    /**
+     * Creates a screen with the given UserController and CampController
+     * @param userController UserController class
+     * @param campController CampController class
+     */
     Screen(UserController userController, CampController campController) {
         this.userController = userController;
         this.campController = campController;
     }
+    /**
+     * Creates new instance of scanner
+     */
     public static Scanner scanner = new Scanner(System.in);
+    /**
+     * abstract class of display for subclass to implement
+     * @return system input
+     */
     public abstract Screen display();
+    /**
+     * selector for display function
+     * @param <T> .
+     * @param indexableContainable List of selections
+     * @return List of selections
+     * @throws ScreenException Throws error for invalid selections
+     */
     public static<T> T select(List<T> indexableContainable) throws ScreenException {
         try {
             var choice = scanner.nextInt();
@@ -33,6 +60,11 @@ public abstract class Screen {
             throw new ScreenException("Not a valid selection.");
         }
     }
+    /**
+     * iterates through list of camps given and prints it to screen
+     * @param <T> .
+     * @param camps List of camps
+     */
     public static<T> void displayContents(List<T> camps) {
         if (camps.isEmpty()) {
             System.out.println("None");
@@ -43,6 +75,11 @@ public abstract class Screen {
             }
         }
     }
+    /**
+     * get integer for selection
+     * @return returns integer selection
+     * @throws ScreenException Throws error for invalid selection
+     */
     public static int getInt() throws ScreenException {
         int ret;
         try {
@@ -54,11 +91,19 @@ public abstract class Screen {
         }
         return ret;
     }
+    /**
+     * takes user for input and changes user password based on system input
+     * @param user
+     */
     protected static void changePassword(User user) {
         System.out.println("Choose new password: ");
         var password = scanner.nextLine();
         user.changePassword(password);
     }
+    /**
+     * filter selector
+     * @param user
+     */
     protected static void selectFilter(User user) {
         while (true) {
             System.out.println("Currently in use filters.");

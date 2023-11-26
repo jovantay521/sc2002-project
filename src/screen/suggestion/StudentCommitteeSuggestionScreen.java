@@ -8,15 +8,30 @@ import screen.ScreenException;
 import screen.StudentCommitteeScreen;
 import user.StudentCommittee;
 import user.UserController;
-
+/**
+ * Student Committee Suggestion Screen
+ */
 public class StudentCommitteeSuggestionScreen extends StudentCommitteeScreen {
+	/**
+	 * Camp
+	 */
     protected Camp camp;
+    /**
+     * Constructor for student committee suggestion screen
+     * @param userController user controller
+     * @param campController camp controller
+     * @param studentCommittee student committee
+     * @param camp camp
+     */
     public StudentCommitteeSuggestionScreen(UserController userController, CampController campController, StudentCommittee studentCommittee, Camp camp) {
         super(userController, campController, studentCommittee);
         this.camp = camp;
     }
 
     @Override
+    /**
+	 * display
+     */
     public Screen display() {
         System.out.println("--------------------------");
         System.out.println("Sent suggestions for camp <" + camp + ">");

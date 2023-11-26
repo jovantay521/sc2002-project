@@ -9,15 +9,30 @@ import screen.StaffScreen;
 import user.Staff;
 import user.StudentCommittee;
 import user.UserController;
-
+/**
+ * Staff in Charge Suggestion Screen
+ */
 public class StaffInChargeSuggestionScreen extends StaffScreen {
+	/**
+	 * Camp
+	 */
     protected Camp camp;
+    /**
+     * Constructor for staff in charge suggestion screen
+     * @param userController user controller
+     * @param campController camp controller
+     * @param staff staff
+     * @param camp camp
+     */
     public StaffInChargeSuggestionScreen(UserController userController, CampController campController, Staff staff, Camp camp) {
         super(userController, campController, staff);
         this.camp = camp;
     }
 
     @Override
+    /**
+	 * display
+     */
     public Screen display() {
         System.out.println("--------------------------");
         System.out.println("Suggestions for Camp <" + camp + ">");

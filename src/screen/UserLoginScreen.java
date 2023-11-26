@@ -4,11 +4,21 @@ import camp.CampController;
 import user.*;
 
 import java.util.NoSuchElementException;
-
+/**
+ * initial login screen
+ */
 public class UserLoginScreen extends Screen {
-    public UserLoginScreen(UserController userController, CampController campController) {
+    /**
+     * constructor for user
+     * @param userController user controller
+     * @param campController camp controller
+     */
+	public UserLoginScreen(UserController userController, CampController campController) {
         super(userController, campController);
     }
+	/**
+	 * display screen for user
+	 */
     @Override
     public Screen display() {
         System.out.println("Login: ");

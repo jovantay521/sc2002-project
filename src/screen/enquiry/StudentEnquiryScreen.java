@@ -7,15 +7,30 @@ import screen.ScreenException;
 import screen.StudentScreen;
 import user.Student;
 import user.UserController;
-
+/**
+ * Student Enquiry Screen
+ */
 public class StudentEnquiryScreen extends StudentScreen {
+	/**
+	 * camp
+	 */
     protected Camp camp;
+    /**
+     * Constructor for student enquiry class
+     * @param userController User Controller
+     * @param campController Camp Controller
+     * @param student Student
+     * @param camp Camp
+     */
     public StudentEnquiryScreen(UserController userController, CampController campController, Student student, Camp camp) {
         super(userController, campController, student);
         this.camp = camp;
     }
 
     @Override
+    /**
+	 * Display
+     */
     public Screen display() {
         System.out.println("--------------------------");
         System.out.println("Personal enquiries for camp <" + camp + ">");

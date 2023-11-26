@@ -13,14 +13,29 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
-
+/**
+ * Screen for staff
+ */
 public class StaffScreen extends Screen {
-    protected Staff staff;
+    /**
+     * staff member
+     */
+	protected Staff staff;
+	/**
+	 * Staff screen constructor
+	 * @param userController user controller
+	 * @param campController camp controller
+	 * @param staff staff member
+	 */
     public StaffScreen(UserController userController, CampController campController, Staff staff) {
         super(userController, campController);
         this.staff = staff;
     }
-
+    
+    /**
+     * print list of camps
+     * @param camps list of camps
+     */
     private void printCamp(List< Camp > camps) {
         System.out.println("Camps: ");
         {
@@ -31,7 +46,10 @@ public class StaffScreen extends Screen {
             }
         }
     }
-
+    
+    /**
+     * display for staff screen
+     */
     @Override
     public Screen display() {
         System.out.println("--------------------------");
