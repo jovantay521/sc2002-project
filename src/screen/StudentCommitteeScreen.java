@@ -180,10 +180,25 @@ public class StudentCommitteeScreen extends Screen {
             }
             case 7 -> {
                 try {
+                    int formatChoice = 0;
                     System.out.println("Select a camp: ");
                     printCamp(camps);
                     var selectedCamp = select(camps);
-                    selectedCamp.generateEnquiryReport("data/Committee_Enquiry_Report" + selectedCamp.getName() + ".csv");
+
+                    do {
+                        System.out.println("Select report format: ");
+                        System.out.println("1: Text File");
+                        System.out.println("2: CSV File");
+                        formatChoice = getInt();
+                    } while (formatChoice < 1 || formatChoice > 2);
+                    switch (formatChoice) {
+                        case 1:
+                            selectedCamp.generateEnquiryReport("data/Committee_Enquiry_Report" + selectedCamp.getName() + ".txt");
+                            break;
+                        case 2:
+                            selectedCamp.generateEnquiryReport("data/Committee_Enquiry_Report" + selectedCamp.getName() + ".csv");
+                            break;
+                    }
                     System.out.println("Generated enquiry report!");
                 } catch (ScreenException e) {
                     System.out.println(e.getMessage());
