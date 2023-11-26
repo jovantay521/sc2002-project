@@ -173,10 +173,10 @@ public class StaffInChargeScreen extends StaffScreen {
                     } while (formatChoice < 1 || formatChoice > 2);
                     switch (formatChoice) {
                         case 1:
-                            selectedCamp.generateEnquiryReport("data/Committee_Enquiry_Report" + selectedCamp.getName() + ".txt");
+                            selectedCamp.generateEnquiryReport("data/Staff_Enquiry_Report" + selectedCamp.getName() + ".txt");
                             break;
                         case 2:
-                            selectedCamp.generateEnquiryReport("data/Committee_Enquiry_Report" + selectedCamp.getName() + ".csv");
+                            selectedCamp.generateEnquiryReport("data/Staff_Enquiry_Report" + selectedCamp.getName() + ".csv");
                             break;
                     }
                     System.out.println("Generated enquiry report!");
