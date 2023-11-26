@@ -162,10 +162,10 @@ public class StudentCommitteeScreen extends Screen {
                         } while (formatChoice < 1 || formatChoice > 2);
                         switch (formatChoice) {
                             case 1:
-                                selectedCamp.generateAttendance(userController, "data/Committee_Report" + selectedCamp.getName() + ".txt", reportChoice);
+                                selectedCamp.generateAttendance(userController, "../data/Committee_Report" + selectedCamp.getName() + ".txt", reportChoice);
                                 break;
                             case 2:
-                                selectedCamp.generateAttendance(userController, "data/Committee_Report" + selectedCamp.getName() + ".csv", reportChoice);
+                                selectedCamp.generateAttendance(userController, "../data/Committee_Report" + selectedCamp.getName() + ".csv", reportChoice);
                                 break;
                         }
 
@@ -183,7 +183,7 @@ public class StudentCommitteeScreen extends Screen {
                     System.out.println("Select a camp: ");
                     printCamp(camps);
                     var selectedCamp = select(camps);
-                    selectedCamp.generateEnquiryReport("data/Committee_Enquiry_Report" + selectedCamp.getName() + ".csv");
+                    selectedCamp.generateEnquiryReport("../data/Committee_Enquiry_Report" + selectedCamp.getName() + ".csv");
                     System.out.println("Generated enquiry report!");
                 } catch (ScreenException e) {
                     System.out.println(e.getMessage());
