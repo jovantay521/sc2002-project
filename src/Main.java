@@ -11,10 +11,10 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
         System.out.println(Paths.get(".").toAbsolutePath().normalize().toString());
-        UserController userController = UserController.loadFrom("../data/users.csv").orElseGet(() -> {
+        UserController userController = UserController.loadFrom("data/users.csv").orElseGet(() -> {
             var tempController = new UserController();
-            tempController.addStudents("../data/student_list.csv");
-            tempController.addStaff("../data/staff_list.csv");
+            tempController.addStudents("data/student_list.csv");
+            tempController.addStaff("data/staff_list.csv");
             return tempController;
         });
 
@@ -34,7 +34,7 @@ public class Main {
 
         System.out.println("Saving...");
 
-        UserController.saveTo("../data/users.csv", userController);
+        UserController.saveTo("data/users.csv", userController);
 
         System.out.println("Exiting...");
     }

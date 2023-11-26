@@ -110,10 +110,10 @@ public class StaffInChargeScreen extends StaffScreen {
                     switch(formatChoice)
                     {
                     	case 1:
-                    		selectedCamp.generateAttendance(userController, "../data/Staff_Report" + selectedCamp.getName() + ".txt", reportChoice);
+                    		selectedCamp.generateAttendance(userController, "data/Staff_Report" + selectedCamp.getName() + ".txt", reportChoice);
                     		break;
                     	case 2:
-                    		selectedCamp.generateAttendance(userController, "../data/Staff_Report" + selectedCamp.getName() + ".csv", reportChoice);
+                    		selectedCamp.generateAttendance(userController, "data/Staff_Report" + selectedCamp.getName() + ".csv", reportChoice);
                     		break;
                     }
                     
