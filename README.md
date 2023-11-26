@@ -1,19 +1,19 @@
 # SC2002-Assignment-Cams
 
-Build the program.
-```bash
-./gradlew build
-```
+## Set Up Instructions
+1.	Download the Zip File 
+2.	Extract it to desired location
+3.	Open the Source Code in VSC/Eclipse
+4.  Open terminal
 
-Run the program.
-```bash
-# Run in project root directory.
-./gradlew run -q --console=plain
-```
+5.  Run
+``` cd src ```
 
-Use the precompiled jar file
-```bash
-# Move the data folder next to the jar file.
-java --jar name_of_jar_file.jar
-```
+6.  Run 
+``` javac ./*.java' ```
 
+7.  Run 
+``` javac Main.java```
+
+8.  Run
+``` javac Main.java ```
