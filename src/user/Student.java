@@ -54,6 +54,10 @@ public class Student extends User {
     	attendingCamps.remove(camp); 
     }
 
+    /**
+     * Getter
+     * @return Get camps that student is attending
+     */
     public List<Camp> getAttendingCamps() {
         return attendingCamps;
     }

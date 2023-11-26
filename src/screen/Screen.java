@@ -93,7 +93,7 @@ public abstract class Screen {
     }
     /**
      * takes user for input and changes user password based on system input
-     * @param user
+     * @param user User that want to change password
      */
     protected static void changePassword(User user) {
         System.out.println("Choose new password: ");
@@ -102,7 +102,7 @@ public abstract class Screen {
     }
     /**
      * filter selector
-     * @param user
+     * @param user User that wants to add a filter
      */
     protected static void selectFilter(User user) {
         while (true) {

@@ -71,7 +71,7 @@ public class Camp
      * Creates a new Camp with the given name, duration, registration deadline, user group,
      * location, total slots, camp committee slot, description, staff in-charge and visibility.
      * @param campName This Camp's name.
-     * @param region This Camp's start date & end date. 
+     * @param region This Camp's start date and end date.
      * @param regCloseDate This Camp's registration deadline.
      * @param userGroup This Camp's is open to which group(faculty) of students.
      * @param location This Camp's location where it will be held at.
@@ -155,7 +155,7 @@ public class Camp
     /**
      * Add student to the Camp as a normal camp attendee.
      * @param student current Student accessing the CAM system.
-     * @throws CampControllerException
+     * @throws CampControllerException If the student user cannot join the camp
      */
     public void addStudent(Student student) throws CampControllerException {
         doStudentChecks(student);
@@ -196,8 +196,10 @@ public class Camp
         student.removeCamp(this);
     }
     
-    /*
+    /**
      * Add suggestion submitted by the camp committee member in the suggestion list.
+     * @param student Student who has a suggestion to add
+     * @param suggestion Suggestion to be added
      */
     public void addSuggestion(Student student, Suggestion suggestion) {
         if (committees.stream().noneMatch(s -> s.equals(student.getUserID()))) {
@@ -467,7 +469,7 @@ public class Camp
     
     /**
      * Changes the number of camp committee slots (capped at 10 slots) of this Camp.
-     * @param campCommitteeSlots This Camp's new camp committee slots.
+     * @param slots This Camp's new camp committee slots.
      */
     public void setCampCommSlots(int slots)
     {
@@ -476,7 +478,7 @@ public class Camp
     
     /**
      * Changes the number of total slots of this Camp.
-     * @param totalSlots This Camp's new total slots.
+     * @param slots This Camp's new total slots.
      */
     public void setTotalSlots(int slots)
     {
@@ -500,7 +502,11 @@ public class Camp
     {
     	campInfo.setDescription(description);
     }
-    
+
+    /**
+     * Changes the location of this Camp.
+     * @param location Camp's new location.
+     */
     public void setLocation(String location)
     {
     	campInfo.setLocation(location);
@@ -526,7 +532,7 @@ public class Camp
     
     /**
      * Changes the user group (faculty) of this Camp.
-     * @param userGroup This Camp's new user group (faculty).
+     * @param userGrp This Camp's new user group (faculty).
      */
     public void setUserGroup(String userGrp)
     {

@@ -67,7 +67,7 @@ public final class CampInformation
      * Creates a new Camp information with the given name, duration, registration deadline, user group,
      * location, total slots, camp committee slot, description and staff in-charge.s
      * @param campName This Camp's name.
-     * @param region This Camp's start date & end date. 
+     * @param region This Camp's start date and end date.
      * @param regCloseDate This Camp's registration deadline.
      * @param userGroup This Camp's is open to which group(faculty) of students.
      * @param location This Camp's location where it will be held at.

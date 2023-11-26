@@ -28,6 +28,10 @@ public class StudentCommittee extends Student {
         filters = student.getFilters();
     }
 
+    /**
+     * Getter
+     * @return Camp that user is a committee member of
+     */
     public Camp getCommitteeCamp() {
         return campIC;
     }
@@ -64,11 +68,5 @@ public class StudentCommittee extends Student {
      */
     public int getPoints() {
         return points;
-    }
-
-    public List<Camp> getAllCamps() {
-        var camps = new ArrayList<>(attendingCamps);
-        camps.add(campIC);
-        return camps;
     }
 }

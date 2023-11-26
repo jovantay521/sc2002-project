@@ -43,15 +43,20 @@ public class CampController
     }
 
     /**
-     * Takes a camp as input and returns whether it should be filtered
+     * Filter interface
      */
     public interface Filter {
-        public boolean accept(Camp camp);
+        /**
+         * Takes a camp as input and returns whether it should be filtered
+         * @param camp Camp to be filtered
+         * @return whether it should be filtered
+         */
+        boolean accept(Camp camp);
     }
 
     /**
      * Returns list of camps that can be viewed by user.
-     * @param User object.
+     * @param user object.
      * @return The list of camps that can be viewed by user.
      */
     public List<Camp> getVisibleCamps(User user)

@@ -37,6 +37,14 @@ public class User {
      */
     protected boolean firstLogin;
 
+    /**
+     * Constructor
+     * @param name Name
+     * @param userID User ID
+     * @param password Password
+     * @param faculty Faculty
+     * @param firstLogin User's first login
+     */
     public User(String name, String userID, String password, String faculty, boolean firstLogin) {
         this(name, userID, password, faculty);
         this.firstLogin = firstLogin;
@@ -89,22 +97,44 @@ public class User {
         return faculty;
     }
 
+    /**
+     * Setting first login to true
+     */
     public void enableFirstLogin() {
         this.firstLogin = true;
     }
 
+    /**
+     * Change user first login to false
+     * @return previous firstLogin value
+     */
     public boolean toggleFirstLogin() {
         boolean ret = firstLogin;
         firstLogin = false;
         return ret;
     }
 
+    /**
+     * Getter
+     * @return Filters that are enabled.
+     */
     public Map<String, CampController.Filter> getFilters() {
         return filters;
     }
+
+    /**
+     * Add filter
+     * @param filterName Filter name
+     * @param filter The filter
+     */
     public void addFilter(String filterName, CampController.Filter filter) {
         filters.put(filterName, filter);
     }
+
+    /**
+     * Delete filter
+     * @param filterName Name of filter to be deleted
+     */
     public void deleteFilter(String filterName) {
         filters.remove(filterName);
     }

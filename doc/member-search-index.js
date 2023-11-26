@@ -1,1 +1,0 @@
-memberSearchIndex = [{"p":"camp","c":"Suggestion","l":"edit(String)","u":"edit(java.lang.String)"},{"p":"camp","c":"Suggestion","l":"getUserID()"},{"p":"camp","c":"Suggestion","l":"Suggestion(String, String)","u":"%3Cinit%3E(java.lang.String,java.lang.String)"},{"p":"camp","c":"Suggestion","l":"toString()"}];updateSearchResults();

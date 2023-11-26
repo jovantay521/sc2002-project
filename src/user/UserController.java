@@ -173,6 +173,7 @@ public class UserController {
      * Generates a performance report to disk.
      * @param filePath File location to save at.
      * @param committees List of committees member to parse.
+     * @param delimiter Delimiter for data values
      */
     public void generatePerformance(String filePath, List<StudentCommittee> committees, String delimiter) {
         try (var bufferedWriter = new BufferedWriter(new FileWriter(filePath))) {

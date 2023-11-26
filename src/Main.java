@@ -4,7 +4,14 @@ import screen.UserLoginScreen;
 import user.*;
 
 
+/**
+ * Main
+ */
 public class Main {
+    /**
+     * Main
+     * @param args ignored in this app
+     */
     public static void main(String[] args) {
         UserController userController = UserController.loadFrom("data/users.csv").orElseGet(() -> {
             var tempController = new UserController();

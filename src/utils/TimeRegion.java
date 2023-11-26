@@ -24,7 +24,11 @@ public class TimeRegion implements Serializable {
     public TimeRegion(LocalDate start, LocalDate end) {
         this.start = start; this.end = end;
     }
-    
+
+    /**
+     * Start time
+     * @return Local start time
+     */
     public LocalDate getStartTime()
     {
     	return start;
