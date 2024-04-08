@@ -14,7 +14,6 @@ Our main learning objectives of the assignment was to:
 - [Installation](#installation)
 - [Usage](#usage)
 - [Credits](#credits)
-- [License](#license)
 
 ## Installation
 
@@ -23,25 +22,22 @@ Clone the project
 git clone https://github.com/jovantay521/sc2002-project-cams.git
 ```
 
-## Usage (TODO)
+## Usage
 
 Compile java files
-```java
-javac src/*.java
 ```
-```java
-javac src/Main.java
+cd src/
+javac *.java
+javac Main.java
 ```
 
 Run the main file
-```java
+```
 java Main.java
 ```
 
+![Screenshot](/assets/images/screenshot.png)
 
-```md
-![Screenshot](assets/images/screenshot.png)
-```
 
 ## Credits
 
