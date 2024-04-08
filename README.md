@@ -6,8 +6,8 @@ CAMs is an application for staff and students to manage, view and register for c
 
 Our main learning objectives of the assignment was to:
 - apply the Object-Oriented Programming (OOP) concepts
-- model, design and develop an OOP application. 
-- gain familiarity with using Java as an object oriented programming language. 
+- model, design and develop an OOP application 
+- gain familiarity with using Java as an object oriented programming language
 
 ## Table of Contents
 
@@ -19,26 +19,28 @@ Our main learning objectives of the assignment was to:
 ## Installation
 
 Clone the project
-```
+```bash
 git clone https://github.com/jovantay521/sc2002-project-cams.git
-```
-Compile java files
-```
-javac src/*/.java
-```
-Run the main file
-```
-java Main.java
 ```
 
 ## Usage (TODO)
 
-Provide instructions and examples for use. Include screenshots as needed.
+Compile java files
+```java
+javac src/*.java
+```
+```java
+javac src/Main.java
+```
 
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
+Run the main file
+```java
+java Main.java
+```
+
 
 ```md
-![alt text](assets/images/screenshot.png)
+![Screenshot](assets/images/screenshot.png)
 ```
 
 ## Credits
